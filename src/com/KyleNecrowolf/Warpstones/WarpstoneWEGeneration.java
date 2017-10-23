@@ -10,13 +10,14 @@ import com.KyleNecrowolf.RealmsCore.Common.Utils;
 import com.sk89q.worldedit.CuboidClipboard;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.MaxChangedBlocksException;
+import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.WorldEditException;
 import com.sk89q.worldedit.bukkit.BukkitUtil;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.patterns.Pattern;
 
-//@SuppressWarnings("deprecation")
+@SuppressWarnings("deprecation")
 final class WarpstoneWEGeneration {
 
     static final int generateWarpstone(Player player, int size, WarpstoneDesigns design){
