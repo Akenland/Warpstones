@@ -1,0 +1,45 @@
+# Warpstones by Kyle Necrowolf
+# Configuration
+
+general:
+  # The accent color to use for warpstones messages. Default BLUE.
+  color: BLUE
+
+
+teleportation:
+  # The maximum distance players can teleport using /tp and /tphere. Players with permission warpstones.tp.nolimits can bypass this limit. Default 750 blocks.
+  max-tp-distance: 750
+
+  # The delay before players teleport. Players with permission warpstones.tp.instant are not delayed. Default 5 seconds.
+  full-delay: 5
+
+  # A reduced delay, for players who are above the health value specified below. This can allow players not in combat to teleport quicker. Default 2 seconds.
+  reduced-delay: 2
+
+  # The minimum amount of health needed to get a reduced delay. Default 20 health.
+  reduced-delay-health: 20
+
+  # The density of the particle effect used when teleporting. Reduce to improve client performance. Players with permission warpstones.tp.silent do not get effects. Default 200.
+  particle-density: 200
+
+  # Volume of sound effect used when teleporting. Increasing will allow it to be heard from further away. Default 0.5.
+  sound-volume: 0.5
+
+
+warpstones:
+  # The name of the spawn warpstone on your server. Used when players type /spawn. Default "spawn".
+  spawn-warpstone: spawn
+
+  # Whether generated warpstones should use designs matching the biome temperature. Default true.
+  generate-biome-warpstones: true
+
+
+items:
+  # Chance of players receiving a warp dust when activating a warpstone. Default 25%.
+  warp-dust-chance: 25
+
+  # Whether Warp Shards can be crafted by players (from 4 warp dust). Default true.
+  warp-shards-craftable: true
+
+  # Whether Warp Shards can be linked and used at warpstones. Default true. 
+  warp-shards-usable: true

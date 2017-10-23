@@ -1,0 +1,22 @@
+name: Warpstones
+version: 1.2pre
+description: A uniquely immersive warping system, allowing players to fast-travel to floating structures known as Warpstones.
+author: Kyle_Necrowolf
+website: http://WolfiaMC.com/plugins
+
+main: com.KyleNecrowolf.Warpstones.Main
+depend: [RealmsCore]
+softdepend: [WorldEdit]
+
+commands:
+  warpstones:
+    description: Warp to a warpstone
+    aliases: [warpstone, wstone, ws, warp, warps, home, last, spawn, sethome]
+  tp:
+    description: Teleport to another player
+    aliases: [tpa, teleport]
+    usage: "Usage: /tp <player>"
+  tphere:
+    description: Teleport another player to you
+    aliases: [tpahere, teleporthere]
+    usage: "Usage: /tphere <players...>"
