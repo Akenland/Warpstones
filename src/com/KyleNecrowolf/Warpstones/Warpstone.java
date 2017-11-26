@@ -282,6 +282,7 @@ public class Warpstone {
 				// If the shard is linked to this warpstone, tell the player
 				if(dest.getName().equals(this.getName())){
 					player.sendMessage(Utils.infoText+"Your warp shard is linked to this warpstone. Use it at any other warpstone to return here.");
+					return;
 				}
 
 				Utils.sendActionBar(player, "Warping to shard's stored destination...");
