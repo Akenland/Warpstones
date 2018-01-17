@@ -87,7 +87,7 @@ class TeleportRequest {
         Utils.sendActionBar(sendingPlayer, "Teleporting to "+receivingPlayer.getDisplayName()+Utils.messageText+". Your current location will be lost.");
 
         // Warn if receiving player is flying
-        if(receivingPlayer.isFlying()) sendingPlayer.sendMessage(receivingPlayer.getDisplayName()+Utils.infoText+" is flying. You may suffer fall damage after teleporting.");
+        if(receivingPlayer.isFlying() && !sendingPlayer.isFlying()) sendingPlayer.sendMessage(receivingPlayer.getDisplayName()+Utils.infoText+" is flying. You may suffer fall damage after teleporting.");
 
         // Complete the teleport
         return new WarpPlayer(sendingPlayer).teleport(receivingPlayer.getLocation(), delay);

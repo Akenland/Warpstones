@@ -70,7 +70,7 @@ class TeleportHereRequest extends TeleportRequest {
         Utils.sendActionBar(receivingPlayer, "Teleporting to "+sendingPlayer.getDisplayName()+Utils.messageText+". Your current location will be lost.");
         
         // Warn if receiving player is flying
-        if(sendingPlayer.isFlying()) receivingPlayer.sendMessage(sendingPlayer.getDisplayName()+Utils.infoText+" is flying. You may suffer fall damage after teleporting.");
+        if(sendingPlayer.isFlying() && !receivingPlayer.isFlying()) receivingPlayer.sendMessage(sendingPlayer.getDisplayName()+Utils.infoText+" is flying. You may suffer fall damage after teleporting.");
 
         // Complete the teleport
         return new WarpPlayer(receivingPlayer).teleport(dest, delay);
