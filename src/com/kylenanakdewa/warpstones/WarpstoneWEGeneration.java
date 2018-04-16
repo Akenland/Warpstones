@@ -1,4 +1,4 @@
-package com.KyleNecrowolf.Warpstones;
+package com.kylenanakdewa.warpstones;
 
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
@@ -6,7 +6,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import com.KyleNecrowolf.RealmsCore.Common.Utils;
+import com.kylenanakdewa.core.common.Utils;
 import com.sk89q.worldedit.CuboidClipboard;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.MaxChangedBlocksException;

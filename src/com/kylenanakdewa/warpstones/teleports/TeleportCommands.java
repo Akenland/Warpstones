@@ -1,4 +1,4 @@
-package com.KyleNecrowolf.Warpstones.Teleports;
+package com.kylenanakdewa.warpstones.teleports;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -6,8 +6,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.KyleNecrowolf.RealmsCore.Common.Error;
-import com.KyleNecrowolf.RealmsCore.Common.Utils;
+import com.kylenanakdewa.core.common.CommonColors;
+import com.kylenanakdewa.core.common.Error;
+import com.kylenanakdewa.core.common.Utils;
 
 public final class TeleportCommands implements CommandExecutor {
     
@@ -46,7 +47,7 @@ public final class TeleportCommands implements CommandExecutor {
 		    vanillaCmd.append("minecraft:tp");
 		    for(String arg:args) {vanillaCmd.append(" ").append(arg);}
 		    // Send the command
-		    Utils.sendActionBar(sender, Utils.infoText+"Teleporting with "+vanillaCmd);
+		    Utils.sendActionBar(sender, CommonColors.INFO+"Teleporting with "+vanillaCmd);
 		    return Bukkit.dispatchCommand(sender, vanillaCmd.toString());
         }
 
@@ -73,7 +74,7 @@ public final class TeleportCommands implements CommandExecutor {
 				    Player targetPlayer = Utils.getPlayer(arg);
 				    if(targetPlayer != null){
 					    new TeleportHereRequest(player, targetPlayer);
-					    destPlayerNames.append(targetPlayer.getDisplayName()).append(Utils.messageText+", ");
+					    destPlayerNames.append(targetPlayer.getDisplayName()).append(CommonColors.MESSAGE+", ");
 				    } else Error.PLAYER_NOT_FOUND.displayActionBar(sender);
                 }
 
@@ -81,7 +82,7 @@ public final class TeleportCommands implements CommandExecutor {
                     // Remove the extra comma at the end of the playernames
 				    destPlayerNames.delete(destPlayerNames.length()-2, destPlayerNames.length()-1);
 				
-                    Utils.sendActionBar(sender, Utils.messageText+"Teleporting "+destPlayerNames+"to you");
+                    Utils.sendActionBar(sender, CommonColors.MESSAGE+"Teleporting "+destPlayerNames+"to you");
                     
                     return true;
                 } else return Error.PLAYER_NOT_FOUND.displayActionBar(sender);

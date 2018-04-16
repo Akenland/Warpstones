@@ -1,9 +1,10 @@
-package com.KyleNecrowolf.Warpstones.Teleports;
+package com.kylenanakdewa.warpstones.teleports;
 
-import com.KyleNecrowolf.RealmsCore.Common.Utils;
-import com.KyleNecrowolf.RealmsCore.Prompts.Prompt;
-import com.KyleNecrowolf.Warpstones.ConfigValues;
-import com.KyleNecrowolf.Warpstones.WarpPlayer;
+import com.kylenanakdewa.core.common.CommonColors;
+import com.kylenanakdewa.core.common.Utils;
+import com.kylenanakdewa.core.common.prompts.Prompt;
+import com.kylenanakdewa.warpstones.ConfigValues;
+import com.kylenanakdewa.warpstones.WarpPlayer;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -42,8 +43,8 @@ class TeleportHereRequest extends TeleportRequest {
 
         // Prompt the receiving player to confirm teleport
         Prompt prompt = new Prompt();
-        prompt.addQuestion(sendingPlayer.getDisplayName()+Utils.infoText+" wants you to teleport to them.");
-        prompt.addAnswer("Click here or type "+ConfigValues.color+"/tp"+Utils.messageText+" to confirm", "command_tp");
+        prompt.addQuestion(sendingPlayer.getDisplayName()+CommonColors.INFO+" wants you to teleport to them.");
+        prompt.addAnswer("Click here or type "+ConfigValues.color+"/tp"+CommonColors.MESSAGE+" to confirm", "command_tp");
         prompt.display(receivingPlayer);
 
         // Save the request
@@ -59,18 +60,18 @@ class TeleportHereRequest extends TeleportRequest {
         if(checkDistance
         && !sendingPlayer.hasPermission("warpstones.tp.nolimits") && !receivingPlayer.hasPermission("warpstones.tp.nolimits")
         && (!sendingPlayer.getWorld().equals(receivingPlayer.getWorld()) || dest.distanceSquared(receivingPlayer.getLocation()) > ConfigValues.tpDistance)){
-            Utils.sendActionBar(receivingPlayer, Utils.errorText+"You are too far away to teleport");
-            Utils.sendActionBar(sendingPlayer, receivingPlayer.getDisplayName()+Utils.errorText+" is too far away to teleport");
+            Utils.sendActionBar(receivingPlayer, CommonColors.ERROR+"You are too far away to teleport");
+            Utils.sendActionBar(sendingPlayer, receivingPlayer.getDisplayName()+CommonColors.ERROR+" is too far away to teleport");
             return false;
         }
 
         // Clear the request
         requests.remove(receivingPlayer.getUniqueId());
 
-        Utils.sendActionBar(receivingPlayer, "Teleporting to "+sendingPlayer.getDisplayName()+Utils.messageText+". Your current location will be lost.");
+        Utils.sendActionBar(receivingPlayer, "Teleporting to "+sendingPlayer.getDisplayName()+CommonColors.MESSAGE+". Your current location will be lost.");
         
         // Warn if receiving player is flying
-        if(sendingPlayer.isFlying() && !receivingPlayer.isFlying()) receivingPlayer.sendMessage(sendingPlayer.getDisplayName()+Utils.infoText+" is flying. You may suffer fall damage after teleporting.");
+        if(sendingPlayer.isFlying() && !receivingPlayer.isFlying()) receivingPlayer.sendMessage(sendingPlayer.getDisplayName()+CommonColors.INFO+" is flying. You may suffer fall damage after teleporting.");
 
         // Complete the teleport
         return new WarpPlayer(receivingPlayer).teleport(dest, delay);

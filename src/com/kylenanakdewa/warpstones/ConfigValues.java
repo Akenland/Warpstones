@@ -1,14 +1,14 @@
-package com.KyleNecrowolf.Warpstones;
+package com.kylenanakdewa.warpstones;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import com.KyleNecrowolf.RealmsCore.Common.ConfigAccessor;
+import com.kylenanakdewa.core.common.ConfigAccessor;
 
 public final class ConfigValues {
 
     //// Config file
-    private static final ConfigAccessor config = new ConfigAccessor("warpstonesconfig.yml", Main.plugin);
+    private static final ConfigAccessor config = new ConfigAccessor("warpstonesconfig.yml", WarpstonesPlugin.plugin);
     private static final FileConfiguration configFile = config.getConfig();
 
     //// Saving default config file
@@ -44,7 +44,7 @@ public final class ConfigValues {
 
     //// Warpstones
     // Spawn warpstone - used for /spawn and default home
-    public static final Warpstone warpstoneSpawn = new Warpstone(configFile.getString("warpstones.spawn-warpstone"));
+    public static final Warpstone warpstoneSpawn = Warpstone.get(configFile.getString("warpstones.spawn-warpstone"));
 
     // Whether to generate biome/temperature-specific warpstones
     public static final boolean generateBiomeWarpstones = configFile.getBoolean("warpstones.generate-biome-warpstones");

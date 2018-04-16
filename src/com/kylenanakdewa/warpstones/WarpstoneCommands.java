@@ -1,4 +1,4 @@
-package com.KyleNecrowolf.Warpstones;
+package com.kylenanakdewa.warpstones;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,14 +11,27 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import com.KyleNecrowolf.RealmsCore.Common.Error;
-import com.KyleNecrowolf.RealmsCore.Common.Utils;
-import com.KyleNecrowolf.RealmsCore.Prompts.Prompt;
-import com.KyleNecrowolf.Warpstones.Items.WarpItems;
+import com.kylenanakdewa.core.common.CommonColors;
+import com.kylenanakdewa.core.common.Error;
+import com.kylenanakdewa.core.common.Utils;
+import com.kylenanakdewa.core.common.prompts.Prompt;
+import com.kylenanakdewa.warpstones.events.PlayerWarpEvent.WarpCause;
+import com.kylenanakdewa.warpstones.items.WarpItems;
 
+/**
+ * Command handler for the Warpstones plugin.
+ * @author Kyle Nanakdewa
+ */
 final class WarpstoneCommands implements TabExecutor {
 
-	//// Commands
+    /** The plugin instance. */
+    private final WarpstonesPlugin plugin;
+
+    WarpstoneCommands(WarpstonesPlugin plugin){
+        this.plugin = plugin;
+    }
+
+
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         // If a warping alias is used, re-run this command
@@ -45,7 +58,7 @@ final class WarpstoneCommands implements TabExecutor {
             
             // Show prompt with available warpstones commands
             Prompt prompt = new Prompt();
-            prompt.addQuestion(Utils.infoText+"--- "+ConfigValues.color+"Warpstones"+Utils.infoText+" ---");
+            prompt.addQuestion(CommonColors.INFO+"--- "+ConfigValues.color+"Warpstones"+CommonColors.INFO+" ---");
             
             if(sender.hasPermission("warpstones.last")) prompt.addAnswer("Warp to last warpstone", "command_warp last");
             if(sender.hasPermission("warpstones.home")) prompt.addAnswer("Warp home", "command_warp home");
@@ -62,21 +75,21 @@ final class WarpstoneCommands implements TabExecutor {
             Player targetPlayer = getTargetPlayer(sender, args);
             if(targetPlayer==null) return Error.PLAYER_NOT_FOUND.displayActionBar(sender);
 
-            return new WarpPlayer(targetPlayer).warpSpawn(true);
+            return new WarpPlayer(targetPlayer).warpSpawn(true, WarpCause.COMMAND);
         }
         if(args[0].equalsIgnoreCase("home")){
             if(!sender.hasPermission("warpstones.home")) return Error.NO_PERMISSION.displayChat(sender);
             Player targetPlayer = getTargetPlayer(sender, args);
             if(targetPlayer==null) return Error.PLAYER_NOT_FOUND.displayActionBar(sender);
 
-            return new WarpPlayer(targetPlayer).warpHome(true);
+            return new WarpPlayer(targetPlayer).warpHome(true, WarpCause.COMMAND);
         }
         if(args[0].equalsIgnoreCase("last")){
             if(!sender.hasPermission("warpstones.last")) return Error.NO_PERMISSION.displayChat(sender);
             Player targetPlayer = getTargetPlayer(sender, args);
             if(targetPlayer==null) return Error.PLAYER_NOT_FOUND.displayActionBar(sender);
 
-            return new WarpPlayer(targetPlayer).warpLast(true);
+            return new WarpPlayer(targetPlayer).warpLast(true, WarpCause.COMMAND);
         }
 
 
@@ -89,9 +102,9 @@ final class WarpstoneCommands implements TabExecutor {
 
         // Version command
         if(args[0].equalsIgnoreCase("version")){
-            sender.sendMessage(ConfigValues.color+"Warpstones "+Main.plugin.getDescription().getVersion()+" by Kyle Necrowolf");
-            sender.sendMessage(Utils.messageText+"- A uniquely immersive warping system, based around floating structures known as Warpstones.");
-            sender.sendMessage(Utils.messageText+"- Website: http://WolfiaMC.com/plugins");
+            sender.sendMessage(ConfigValues.color+"Warpstones "+plugin.getDescription().getVersion()+" by Kyle Necrowolf");
+            sender.sendMessage(CommonColors.MESSAGE+"- A uniquely immersive warping system, based around floating structures known as Warpstones.");
+            sender.sendMessage(CommonColors.MESSAGE+"- Website: http://WolfiaMC.com/plugins");
 			return true;
         }
 
@@ -107,7 +120,7 @@ final class WarpstoneCommands implements TabExecutor {
 
                 if(targetPlayer==null) return Error.PLAYER_NOT_FOUND.displayActionBar(sender);
 
-                return new WarpPlayer(targetPlayer).warp(new Warpstone(args[1]), true);
+                return new WarpPlayer(targetPlayer).warp(Warpstone.get(args[1]), true, WarpCause.COMMAND);
             }
             return Error.NO_PERMISSION.displayChat(sender);
         }
@@ -120,8 +133,8 @@ final class WarpstoneCommands implements TabExecutor {
 
             Player player = (Player) sender;
 
-            new Warpstone(args[1]).setLocation(player.getLocation());
-            sender.sendMessage(Utils.messageText+"Warpstone "+args[1]+" created.");
+            Warpstone.get(args[1]).setLocation(player.getLocation());
+            sender.sendMessage(CommonColors.MESSAGE+"Warpstone "+args[1]+" created.");
 
             // Prompt the player to generate the warpstone
             onCommand(sender, command, label, new String[] {"generate", args[1]});
@@ -133,8 +146,8 @@ final class WarpstoneCommands implements TabExecutor {
         if(args.length==2 && args[0].equalsIgnoreCase("remove")){
             if(!sender.hasPermission("warpstones.manage")) return Error.NO_PERMISSION.displayChat(sender);
 
-            new Warpstone(args[1]).delete();
-            sender.sendMessage(Utils.messageText+"Warpstone "+args[1]+" removed from file.");
+            Warpstone.get(args[1]).delete();
+            sender.sendMessage(CommonColors.MESSAGE+"Warpstone "+args[1]+" removed from file.");
 
             return true;
         }
@@ -160,14 +173,14 @@ final class WarpstoneCommands implements TabExecutor {
             if(args.length>=3){
                 Player player = (Player) sender;
                 if(args.length==3){
-                    new Warpstone(args[1]).generateWarpstone(player, Integer.parseInt(args[2]));
+                    Warpstone.get(args[1]).generateWarpstone(player, Integer.parseInt(args[2]));
                     return true;
                 }
                 if(args.length==4){
                     // Make sure they entered a valid warpstone design
                     for(WarpstoneDesigns design : WarpstoneDesigns.values()){
                         if(args[3].equalsIgnoreCase(design.name())){
-                            new Warpstone(args[1]).generateWarpstone(player, Integer.parseInt(args[2]), design);
+                            Warpstone.get(args[1]).generateWarpstone(player, Integer.parseInt(args[2]), design);
                             return true;
                         }
                     }
@@ -180,13 +193,13 @@ final class WarpstoneCommands implements TabExecutor {
 
             if(args.length==2){
 				WarpUtils.warpstoneCmdSet.put(sender.getName(), args[1].toLowerCase());
-				Utils.sendActionBar(sender, Utils.messageText+"Activate plates to set command blocks for "+args[1]+" warpstone");
+				Utils.sendActionBar(sender, CommonColors.MESSAGE+"Activate plates to set command blocks for "+args[1]+" warpstone");
 				return true;
 			}
 			if(args.length==1){
 				EventListener.timesSetCmd = 0;
 				WarpUtils.warpstoneCmdSet.remove(sender.getName());
-				Utils.sendActionBar(sender, Utils.messageText+"Command blocks will no longer be set");
+				Utils.sendActionBar(sender, CommonColors.MESSAGE+"Command blocks will no longer be set");
 				return true;
 			}
         }
@@ -208,7 +221,7 @@ final class WarpstoneCommands implements TabExecutor {
                     item = WarpItems.WARP_SHARD;
                     break;
                 case "warp_shard_linked":
-                    if(args.length==3) item = WarpItems.getLinkedWarpShard(new Warpstone(args[2]));
+                    if(args.length==3) item = WarpItems.getLinkedWarpShard(Warpstone.get(args[2]));
                     break;
                 default:
                     break;
@@ -226,7 +239,7 @@ final class WarpstoneCommands implements TabExecutor {
         if(args[0].equalsIgnoreCase("enter") && sender.isOp()){
             Player player = Bukkit.getPlayer(args[2]);
 			if(player==null) return Error.PLAYER_NOT_FOUND.displayChat(sender);
-			new Warpstone(args[1]).enter(player);
+			Warpstone.get(args[1]).activate(player);
 			return true;
         }
 
@@ -252,7 +265,6 @@ final class WarpstoneCommands implements TabExecutor {
     }
 
 
-	//// Tab completions
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
 	
@@ -284,5 +296,6 @@ final class WarpstoneCommands implements TabExecutor {
 
         
         return null;
-	}
+    }
+
 }

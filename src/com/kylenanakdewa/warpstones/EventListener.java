@@ -1,4 +1,4 @@
-package com.KyleNecrowolf.Warpstones;
+package com.kylenanakdewa.warpstones;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -15,7 +15,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-import com.KyleNecrowolf.RealmsCore.Common.Utils;
+import com.kylenanakdewa.core.common.CommonColors;
+import com.kylenanakdewa.core.common.Utils;
 
 public final class EventListener implements Listener {
 	
@@ -32,7 +33,7 @@ public final class EventListener implements Listener {
 			double distanceSquaredMoved = event.getFrom().distanceSquared(event.getTo());
 			if(distanceSquaredMoved>0.02 && !player.hasPermission("warpstones.tp.instant")){
 				hasPlayerMoved.put(player.getUniqueId(), true);
-				Utils.sendActionBar(player, Utils.errorText+"You cannot teleport while moving.");
+				Utils.sendActionBar(player, CommonColors.ERROR+"You cannot teleport while moving.");
 			}
 		}
 	}
@@ -55,7 +56,7 @@ public final class EventListener implements Listener {
 					BlockState cmdBlockState = cmdBlock.getState();
 
 					// Delay
-					Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getProvidingPlugin(EventListener.class), new Runnable() {
+					Bukkit.getScheduler().scheduleSyncDelayedTask(WarpstonesPlugin.getProvidingPlugin(EventListener.class), new Runnable() {
 						@Override
 						public void run(){
 							// Update the command block after five seconds so the player has time to move
@@ -66,7 +67,7 @@ public final class EventListener implements Listener {
 
 					// If they've done this four times, automatically exit
 					timesSetCmd++;
-					Utils.sendActionBar(player, Utils.messageText+""+timesSetCmd+" warpstone command blocks set");
+					Utils.sendActionBar(player, CommonColors.MESSAGE+""+timesSetCmd+" warpstone command blocks set");
 					if(timesSetCmd>=4){
 						timesSetCmd = 0;
 						WarpUtils.warpstoneCmdSet.remove(player.getName());
