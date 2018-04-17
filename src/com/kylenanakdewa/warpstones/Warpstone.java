@@ -389,7 +389,7 @@ public class Warpstone {
 			WarpUtils.playersSettingHome.remove(player.getName());
 
 			// If this is spawn warpstone, don't set it as home
-			if(this.identifier.equals(ConfigValues.warpstoneSpawn.getName())){
+			if(this.equals(ConfigValues.warpstoneSpawn)){
 				player.sendMessage(CommonColors.MESSAGE+"This is the spawn warpstone, you cannot set it as your home warpstone. Return here with "+ConfigValues.color+"/spawn");
 				return;
 			}
@@ -413,7 +413,7 @@ public class Warpstone {
 		}
 
 		// If this is spawn warpstone
-		if(this.identifier.equals(ConfigValues.warpstoneSpawn.getName())){
+		if(this.equals(ConfigValues.warpstoneSpawn)){
 			prompt.addQuestion("This is the spawn warpstone. Return here with "+ConfigValues.color+"/spawn"+CommonColors.MESSAGE+". "+"Warpstones allow you to fast travel to previously visited locations.");
 			questionSet = true;
 		} else {

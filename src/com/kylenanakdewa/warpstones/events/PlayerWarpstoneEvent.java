@@ -42,21 +42,24 @@ public abstract class PlayerWarpstoneEvent extends PlayerEvent {
 	 * @return true if it's the player's home warpstone, otherwise false
 	 */
 	public boolean isHomeWarpstone(){
-		return playerData.getHome().equals(warpstone);
+		Warpstone home = playerData.getHome();
+		return home!=null ? home.equals(warpstone) : false;
 	}
 	/**
 	 * Returns true if event involves the player's last warpstone.
 	 * @return true if it's the player's last warpstone, otherwise false
 	 */
 	public boolean isLastWarpstone(){
-		return playerData.getLast().equals(warpstone);
+		Warpstone last = playerData.getLast();
+		return last!=null ? last.equals(warpstone) : false;
 	}
 	/**
 	 * Returns true if event involves the server spawn warpstone.
 	 * @return true if it's the spawn warpstone, otherwise false
 	 */
 	public boolean isSpawnWarpstone(){
-		return Warpstone.getSpawn().equals(warpstone);
+		Warpstone spawn = Warpstone.getSpawn();
+		return spawn!=null ? spawn.equals(warpstone) : false;
 	}
 
 }
