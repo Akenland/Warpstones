@@ -116,7 +116,7 @@ public class WarpPlayer extends PlayerSaveDataSection {
 		Player player = (Player)character.getPlayer();
 
 		// If this warpstone doens't have a location, give an error and return
-		if(warpstone.getLocation()==null){
+		if(warpstone==null || warpstone.getLocation()==null){
 			Utils.sendActionBar(player, CommonColors.ERROR+"Warpstone not found");
 			return false;
 		}
