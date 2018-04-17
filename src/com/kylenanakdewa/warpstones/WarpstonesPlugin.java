@@ -89,7 +89,9 @@ public final class WarpstonesPlugin extends JavaPlugin {
 	 * Gets the ConfigurationSection for the warpstones file.
 	 */
 	ConfigurationSection getWarpstonesFile(){
-		return warpstonesConfigAccessor.getConfig().getConfigurationSection("warpstones");
+		ConfigurationSection config = warpstonesConfigAccessor.getConfig().getConfigurationSection("warpstones");
+		if(config==null) config = warpstonesConfigAccessor.getConfig().createSection("warpstones");
+		return config;
 	}
 
 
