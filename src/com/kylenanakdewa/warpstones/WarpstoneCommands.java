@@ -133,7 +133,12 @@ final class WarpstoneCommands implements TabExecutor {
 
             Player player = (Player) sender;
 
-            Warpstone.get(args[1]).setLocation(player.getLocation());
+            // Make sure Warpstone doesn't already exist
+            if(Warpstone.get(args[1])!=null){
+                sender.sendMessage(CommonColors.ERROR+"Warpstone "+args[1]+" already exists.");
+            }
+
+            Warpstone.create(args[1], player.getLocation());
             sender.sendMessage(CommonColors.MESSAGE+"Warpstone "+args[1]+" created.");
 
             // Prompt the player to generate the warpstone
@@ -146,7 +151,9 @@ final class WarpstoneCommands implements TabExecutor {
         if(args.length==2 && args[0].equalsIgnoreCase("remove")){
             if(!sender.hasPermission("warpstones.manage")) return Error.NO_PERMISSION.displayChat(sender);
 
-            Warpstone.get(args[1]).delete();
+            Warpstone warpstone = Warpstone.get(args[1]);
+            if(warpstone==null) return Error.INVALID_ARGS.displayActionBar(sender);
+            warpstone.delete();
             sender.sendMessage(CommonColors.MESSAGE+"Warpstone "+args[1]+" removed from file.");
 
             return true;
@@ -172,15 +179,17 @@ final class WarpstoneCommands implements TabExecutor {
             // If 3 args, generate warpstone
             if(args.length>=3){
                 Player player = (Player) sender;
+                Warpstone warpstone = Warpstone.get(args[1]);
+                if(warpstone==null) return Error.INVALID_ARGS.displayActionBar(sender);
                 if(args.length==3){
-                    Warpstone.get(args[1]).generateWarpstone(player, Integer.parseInt(args[2]));
+                    warpstone.generateWarpstone(player, Integer.parseInt(args[2]));
                     return true;
                 }
                 if(args.length==4){
                     // Make sure they entered a valid warpstone design
                     for(WarpstoneDesigns design : WarpstoneDesigns.values()){
                         if(args[3].equalsIgnoreCase(design.name())){
-                            Warpstone.get(args[1]).generateWarpstone(player, Integer.parseInt(args[2]), design);
+                            warpstone.generateWarpstone(player, Integer.parseInt(args[2]), design);
                             return true;
                         }
                     }
@@ -238,8 +247,12 @@ final class WarpstoneCommands implements TabExecutor {
         // Enter command - used for command blocks triggered when a player enters a warpstone
         if(args[0].equalsIgnoreCase("enter") && sender.isOp()){
             Player player = Bukkit.getPlayer(args[2]);
-			if(player==null) return Error.PLAYER_NOT_FOUND.displayChat(sender);
-			Warpstone.get(args[1]).activate(player);
+            if(player==null) return Error.PLAYER_NOT_FOUND.displayChat(sender);
+
+            Warpstone warpstone = Warpstone.get(args[1]);
+            if(warpstone==null) return Error.INVALID_ARGS.displayActionBar(sender);
+
+            warpstone.activate(player);
 			return true;
         }
 
