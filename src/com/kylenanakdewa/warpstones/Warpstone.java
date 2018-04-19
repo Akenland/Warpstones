@@ -11,10 +11,12 @@ import org.bukkit.block.CommandBlock;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import com.kylenanakdewa.core.common.CommonColors;
 import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.core.common.prompts.Prompt;
+import com.kylenanakdewa.core.common.savedata.SaveDataSection;
 import com.kylenanakdewa.warpstones.ConfigValues;
 import com.kylenanakdewa.warpstones.events.WarpstoneActivateEvent;
 import com.kylenanakdewa.warpstones.events.WarpstoneEditEvent;
@@ -438,5 +440,18 @@ public class Warpstone {
 	private void fireEditEvent(){
 		Bukkit.getServer().getPluginManager().callEvent(new WarpstoneEditEvent(this));
 		WarpstonesPlugin.plugin.saveWarpstones();
+	}
+
+
+	/**
+	 * Gets a plugin's data section for this Warpstone.
+	 * Plugins can use this to save extra data for this Warpstone.
+	 * @param plugin the plugin to get data for
+	 * @return the data section
+	 */
+	public SaveDataSection getData(Plugin plugin){
+		ConfigurationSection data = WarpstonesPlugin.getWarpstonesFile().getConfigurationSection(plugin.getName());
+		if(data==null) data = WarpstonesPlugin.getWarpstonesFile().createSection(plugin.getName());
+		return new SaveDataSection(data);
 	}
 }

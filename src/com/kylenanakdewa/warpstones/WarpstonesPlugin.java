@@ -27,12 +27,13 @@ public final class WarpstonesPlugin extends JavaPlugin {
 	private static final Map<String,Warpstone> warpstones = new HashMap<String,Warpstone>();
 
 	/** ConfigAccessor for warpstones.yml */
-	private ConfigAccessor warpstonesConfigAccessor = new ConfigAccessor("warpstones.yml", this);
+	private static ConfigAccessor warpstonesConfigAccessor;
 
 
 	@Override
 	public void onEnable(){
 		plugin = this;
+		warpstonesConfigAccessor = new ConfigAccessor("warpstones.yml", this);
 
 		reload();
 
@@ -88,7 +89,7 @@ public final class WarpstonesPlugin extends JavaPlugin {
 	/**
 	 * Gets the ConfigurationSection for the warpstones file.
 	 */
-	ConfigurationSection getWarpstonesFile(){
+	static ConfigurationSection getWarpstonesFile(){
 		ConfigurationSection config = warpstonesConfigAccessor.getConfig().getConfigurationSection("warpstones");
 		if(config==null) config = warpstonesConfigAccessor.getConfig().createSection("warpstones");
 		return config;
