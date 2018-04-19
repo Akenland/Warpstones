@@ -17,6 +17,8 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import com.kylenanakdewa.core.common.CommonColors;
 import com.kylenanakdewa.core.common.Utils;
+import com.kylenanakdewa.core.common.prompts.PromptActionEvent;
+import com.kylenanakdewa.warpstones.events.PlayerWarpEvent.WarpCause;
 
 public final class EventListener implements Listener {
 	
@@ -73,6 +75,29 @@ public final class EventListener implements Listener {
 						WarpUtils.warpstoneCmdSet.remove(player.getName());
 					}
 				}
+			}
+		}
+	}
+
+
+	// Prompt actions
+	@EventHandler
+	public void onPrompt(PromptActionEvent event){
+		if(event.isType("warp")){
+			WarpPlayer player = new WarpPlayer(event.getPlayer());
+			switch(event.getAction()){
+				case "home":
+					player.warpHome(false, WarpCause.WARPSTONE);
+					break;
+				case "last":
+					player.warpLast(false, WarpCause.WARPSTONE);
+					break;
+				case "spawn":
+					player.warpSpawn(false, WarpCause.WARPSTONE);
+					break;
+				default:
+					player.warp(Warpstone.get(event.getAction()), false, WarpCause.WARPSTONE);
+					break;
 			}
 		}
 	}

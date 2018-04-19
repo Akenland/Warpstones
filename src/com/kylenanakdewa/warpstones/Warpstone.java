@@ -411,7 +411,7 @@ public class Warpstone {
 			prompt.addQuestion("This is your home warpstone. Return here with "+ConfigValues.color+"/home");
 			questionSet = true;
 		} else {
-			prompt.addAnswer("Warp home", "command_warp home");
+			prompt.addAnswer("Warp home", "warp_home");
 		}
 
 		// If this is spawn warpstone
@@ -419,7 +419,7 @@ public class Warpstone {
 			prompt.addQuestion("This is the spawn warpstone. Return here with "+ConfigValues.color+"/spawn"+CommonColors.MESSAGE+". "+"Warpstones allow you to fast travel to previously visited locations.");
 			questionSet = true;
 		} else {
-			prompt.addAnswer("Warp to spawn", "command_warp spawn");
+			prompt.addAnswer("Warp to spawn", "warp_spawn");
 		}
 
 		// If this is neither (last warpstone)
@@ -427,7 +427,7 @@ public class Warpstone {
 			prompt.addQuestion("Location saved. Return here with "+ConfigValues.color+"/warp last");
 			warpPlayer.setLast(this);
 		} else {
-			prompt.addAnswer("Warp to last warpstone", "command_warp last");
+			prompt.addAnswer("Warp to last warpstone", "warp_last");
 		}
 
 		prompt.display(player);
