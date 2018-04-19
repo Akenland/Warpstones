@@ -22,7 +22,7 @@ public abstract class WarpstoneSaveDataSection extends SaveDataSection {
      * @param plugin the plugin that is saving data
      */
     public WarpstoneSaveDataSection(Warpstone warpstone, Plugin plugin){
-        super(WarpstonesPlugin.plugin.getWarpstonesFile(), warpstone.getIdentifier()+"."+plugin.getName());
+        super(WarpstonesPlugin.plugin.getWarpstonesFile().getConfigurationSection(warpstone.getIdentifier()+"."+plugin.getName()));
         this.warpstone = warpstone;
         this.plugin = plugin;
     }
