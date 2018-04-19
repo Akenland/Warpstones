@@ -76,14 +76,14 @@ public class WarpPlayer extends PlayerSaveDataSection {
 	 * @return the player's home warpstone, or null if it does not exist
 	 */
 	public Warpstone getHome(){
-		return Warpstone.get(getString("home"));
+		return Warpstone.get(data.getString("home"));
 	}
 	/**
 	 * Sets the player's home Warpstone.
 	 * @param warpstone the new home warpstone, or null to clear
 	 */
 	public void setHome(Warpstone warpstone){
-		set("home", warpstone.getIdentifier());
+		data.set("home", warpstone.getIdentifier());
 		save();
 	}
 
@@ -92,14 +92,14 @@ public class WarpPlayer extends PlayerSaveDataSection {
 	 * @return the player's last warpstone, or null if it does not exist
 	 */
 	public Warpstone getLast(){
-		return Warpstone.get(getString("last"));
+		return Warpstone.get(data.getString("last"));
 	}
 	/**
 	 * Sets the player's last Warpstone.
 	 * @param warpstone the new last warpstone, or null to clear
 	 */
 	public void setLast(Warpstone warpstone){
-		set("last", warpstone.getIdentifier());
+		data.set("last", warpstone.getIdentifier());
 		save();
 	}
 
