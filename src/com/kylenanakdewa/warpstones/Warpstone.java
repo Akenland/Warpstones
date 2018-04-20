@@ -441,6 +441,7 @@ public class Warpstone {
 		}
 
 		prompt.display(player);
+		if(getDisplayName()!=null) Utils.sendActionBar(player, ConfigValues.color+getDisplayName());
 	}
 
 
