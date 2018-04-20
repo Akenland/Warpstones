@@ -33,6 +33,7 @@ final class DynmapWarpstones implements Listener {
     private MarkerSet getMarkerSet(){
         MarkerSet set = dynmapAPI.getMarkerAPI().getMarkerSet("Warpstones");
         if(set==null) set = dynmapAPI.getMarkerAPI().createMarkerSet("Warpstones", "Warpstones", null, false);
+        set.setMinZoom(3);
         return set;
     }
 
