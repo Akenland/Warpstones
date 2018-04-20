@@ -92,13 +92,13 @@ public class Warpstone {
 	ConfigurationSection saveToConfig(){
 		ConfigurationSection warpstoneKey = new MemoryConfiguration();
 		// Save the location
-		if(location!=null){
-			warpstoneKey.set("location.world", this.location.getWorld().getName());
-			warpstoneKey.set("location.x", this.location.getX());
-			warpstoneKey.set("location.y", this.location.getY());
-			warpstoneKey.set("location.z", this.location.getZ());
-			warpstoneKey.set("location.yaw", this.location.getYaw());
-			warpstoneKey.set("location.pitch", this.location.getPitch());
+		if(location!=null && location.getWorld()!=null){
+			warpstoneKey.set("location.world", location.getWorld().getName());
+			warpstoneKey.set("location.x", location.getX());
+			warpstoneKey.set("location.y", location.getY());
+			warpstoneKey.set("location.z", location.getZ());
+			warpstoneKey.set("location.yaw", location.getYaw());
+			warpstoneKey.set("location.pitch", location.getPitch());
 		}
 
 		warpstoneKey.set("disabled", isDisabled() ? true : null);
