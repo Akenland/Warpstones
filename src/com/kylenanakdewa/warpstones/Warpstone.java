@@ -33,6 +33,7 @@ public class Warpstone {
 	 * @return the Warpstone, or null if it does not exist
 	 */
 	public static Warpstone get(String identifier){
+		identifier = identifier.toLowerCase();
 		return WarpstonesPlugin.getWarpstones().get(identifier);
 	}
 	/**
@@ -43,6 +44,7 @@ public class Warpstone {
 	 * @throws IllegalArgumentException if the Warpstone already exists
 	 */
 	public static Warpstone create(String identifier, Location location){
+		identifier = identifier.toLowerCase();
 		if(WarpstonesPlugin.getWarpstones().containsKey(identifier)) throw new IllegalArgumentException("Warpstone "+identifier+" already exists");
 
 		Warpstone warpstone = new Warpstone(identifier);
