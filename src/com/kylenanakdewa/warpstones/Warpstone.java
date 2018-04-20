@@ -105,6 +105,8 @@ public class Warpstone {
 		warpstoneKey.set("condition", getCondition());
 		warpstoneKey.set("display-name", getDisplayName());
 
+		data.getValues(true).forEach((key,value) -> warpstoneKey.set(key, value));
+
 		return warpstoneKey;
 	}
 
