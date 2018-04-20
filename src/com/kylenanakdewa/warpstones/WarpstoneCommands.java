@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.rmi.CORBA.Util;
-
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -222,6 +221,25 @@ final class WarpstoneCommands implements TabExecutor {
 			}
         }
 
+        // Rename command
+        if(args[0].equalsIgnoreCase("name")){
+            if(!sender.hasPermission("warpstones.manage") || !(sender instanceof Player)) return Error.NO_PERMISSION.displayChat(sender);
+
+            if(args.length<3) return Error.INVALID_ARGS.displayActionBar(sender);
+
+            Warpstone warpstone = Warpstone.get(args[1]);
+            if(warpstone==null) return Error.INVALID_ARGS.displayActionBar(sender);
+
+            // Merge all remaining args into a single string
+            List<String> lastArgs = new ArrayList<String>(Arrays.asList(args));
+            for(int i=0; i<2; i++) lastArgs.remove(0);
+            String data = ChatColor.translateAlternateColorCodes('&', String.join(" ", lastArgs));
+            warpstone.setDisplayName(data);
+
+            sender.sendMessage(CommonColors.MESSAGE+"Display name for Warpstone "+warpstone.getIdentifier()+" set to "+data);
+            return true;
+        }
+
 
         // Give command - used to give players warp items
         if(args[0].equalsIgnoreCase("give") && args.length>=2){
@@ -310,7 +328,7 @@ final class WarpstoneCommands implements TabExecutor {
 
             completions.addAll(Arrays.asList("to","version"));
 
-            if(sender.hasPermission("warpstones.manage")) completions.addAll(Arrays.asList("create","remove","generate"));
+            if(sender.hasPermission("warpstones.manage")) completions.addAll(Arrays.asList("create","remove","generate","name"));
             if(sender.hasPermission("warpstones.give")) completions.add("give");
 
             return completions;
