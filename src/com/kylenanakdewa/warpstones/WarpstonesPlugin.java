@@ -117,7 +117,7 @@ public final class WarpstonesPlugin extends JavaPlugin {
 	 */
 	public void saveWarpstones(){
 		warpstones.forEach((warpstoneName,warpstone) ->
-			getWarpstonesFile().set(warpstoneName, warpstone.saveToConfig())
+			getWarpstonesFile().createSection(warpstoneName, warpstone.saveToConfig().getValues(true))
 		);
 		warpstonesConfigAccessor.saveConfig();
 	}
