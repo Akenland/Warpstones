@@ -42,7 +42,8 @@ final class DynmapWarpstones implements Listener {
      */
     private void updateMarkers(){
         // Remove existing
-        getMarkerSet().getMarkers().clear();
+        //getMarkerSet().getMarkers().clear();
+        getMarkerSet().deleteMarkerSet();
 
         // Add warpstones
         for(Warpstone warpstone : WarpstonesPlugin.getWarpstones().values()){
