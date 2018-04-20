@@ -177,7 +177,7 @@ public class WarpPlayer extends PlayerSaveDataSection {
 		}
 
 		Player player = (Player)character.getPlayer();
-		Warpstone spawn = ConfigValues.warpstoneSpawn;
+		Warpstone spawn = Warpstone.getSpawn();
 
 		Utils.sendActionBar(player, CommonColors.MESSAGE+"Warping to spawn...");
 		return warp(spawn, delay, cause);
