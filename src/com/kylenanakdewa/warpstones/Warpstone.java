@@ -81,7 +81,7 @@ public class Warpstone {
 		warpstone.setCondition(warpstoneKey.getString("condition"));
 		warpstone.setDisplayName(warpstoneKey.getString("display-name"));
 
-		warpstone.data = warpstoneKey;
+		warpstone.data = warpstoneKey.getConfigurationSection("data");
 
 		return warpstone;
 	}
@@ -106,7 +106,7 @@ public class Warpstone {
 		warpstoneKey.set("condition", getCondition());
 		warpstoneKey.set("display-name", getDisplayName());
 
-		data.getValues(true).forEach((key,value) -> warpstoneKey.set(identifier+"."+key, value));
+		warpstoneKey.createSection("data", data.getValues(true));
 
 		return warpstoneKey;
 	}
