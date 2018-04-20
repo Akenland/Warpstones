@@ -81,6 +81,8 @@ public class Warpstone {
 		warpstone.setCondition(warpstoneKey.getString("condition"));
 		warpstone.setDisplayName(warpstoneKey.getString("display-name"));
 
+		warpstone.data = warpstoneKey;
+
 		return warpstone;
 	}
 	/**
@@ -103,6 +105,8 @@ public class Warpstone {
 		warpstoneKey.set("require-perm", requiresPerm() ? true : null);
 		warpstoneKey.set("condition", getCondition());
 		warpstoneKey.set("display-name", getDisplayName());
+
+		data.getValues(true).forEach((key,value) -> warpstoneKey.set(key, value));
 
 		return warpstoneKey;
 	}
@@ -132,6 +136,9 @@ public class Warpstone {
 	private boolean requirePerm;
 	/** A condition that must be met to activate this Warpstone. Optional. */
 	private String condition;
+
+	/** A data section for other plugins to store data for this Warpstone. */
+	private ConfigurationSection data;
 
 
 	private Warpstone(String identifier){
@@ -450,8 +457,8 @@ public class Warpstone {
 	 * @return the data section
 	 */
 	public SaveDataSection getData(Plugin plugin){
-		ConfigurationSection data = WarpstonesPlugin.getWarpstonesFile().getConfigurationSection(plugin.getName());
-		if(data==null) data = WarpstonesPlugin.getWarpstonesFile().createSection(plugin.getName());
-		return new SaveDataSection(data);
+		ConfigurationSection pluginData = data.getConfigurationSection(plugin.getName());
+		if(pluginData==null) pluginData = WarpstonesPlugin.getWarpstonesFile().createSection(plugin.getName());
+		return new SaveDataSection(pluginData);
 	}
 }
