@@ -33,7 +33,6 @@ public class Warpstone {
 	 * @return the Warpstone, or null if it does not exist
 	 */
 	public static Warpstone get(String identifier){
-		identifier = identifier.toLowerCase();
 		return WarpstonesPlugin.getWarpstones().get(identifier);
 	}
 	/**
