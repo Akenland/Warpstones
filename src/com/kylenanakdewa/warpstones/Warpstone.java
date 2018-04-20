@@ -47,6 +47,7 @@ public class Warpstone {
 
 		Warpstone warpstone = new Warpstone(identifier);
 		warpstone.setLocation(location);
+
 		WarpstonesPlugin.getWarpstones().put(identifier, warpstone);
 		return warpstone;
 	}
@@ -81,9 +82,6 @@ public class Warpstone {
 		warpstone.setCondition(warpstoneKey.getString("condition"));
 		warpstone.setDisplayName(warpstoneKey.getString("display-name"));
 
-		warpstone.data = warpstoneKey.getConfigurationSection("data");
-		if(warpstone.data==null) warpstone.data = warpstoneKey.createSection("data");
-
 		return warpstone;
 	}
 	/**
@@ -106,8 +104,6 @@ public class Warpstone {
 		warpstoneKey.set("require-perm", requiresPerm() ? true : null);
 		warpstoneKey.set("condition", getCondition());
 		warpstoneKey.set("display-name", getDisplayName());
-
-		warpstoneKey.createSection("data", data==null ? null : data.getValues(true));
 
 		return warpstoneKey;
 	}
@@ -144,6 +140,8 @@ public class Warpstone {
 
 	private Warpstone(String identifier){
 		this.identifier = identifier.toLowerCase();
+		data = WarpstonesPlugin.getWarpstonesFile().getConfigurationSection(identifier);
+		if(data==null) data = WarpstonesPlugin.getWarpstonesFile().createSection(identifier);
 	}
 
 
@@ -459,7 +457,7 @@ public class Warpstone {
 	 */
 	public SaveDataSection getData(Plugin plugin){
 		ConfigurationSection pluginData = data.getConfigurationSection(plugin.getName());
-		if(pluginData==null) pluginData = WarpstonesPlugin.getWarpstonesFile().createSection(plugin.getName());
+		if(pluginData==null) pluginData = data.createSection(plugin.getName());
 		return new SaveDataSection(pluginData);
 	}
 }
