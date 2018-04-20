@@ -107,7 +107,7 @@ public class Warpstone {
 		warpstoneKey.set("condition", getCondition());
 		warpstoneKey.set("display-name", getDisplayName());
 
-		warpstoneKey.createSection("data", data.getValues(true));
+		warpstoneKey.createSection("data", data==null ? null : data.getValues(true));
 
 		return warpstoneKey;
 	}
