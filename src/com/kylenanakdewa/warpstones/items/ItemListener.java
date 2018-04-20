@@ -73,7 +73,7 @@ public final class ItemListener implements Listener {
 
 
 		// If this isn't the last warpstone they visited, get a random number to see if they get a warp dust
-		if(!event.isLastWarpstone() && ThreadLocalRandom.current().nextInt(100) > 100-ConfigValues.warpDustChance){
+		if(!event.isLastWarpstone() && !event.isHomeWarpstone() && !event.isSpawnWarpstone() && ThreadLocalRandom.current().nextInt(100) > 100-ConfigValues.warpDustChance){
 			event.getPlayer().getInventory().addItem(WarpItems.WARP_DUST);
 		}
 	}
