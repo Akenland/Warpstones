@@ -82,6 +82,7 @@ public class Warpstone {
 		warpstone.setDisplayName(warpstoneKey.getString("display-name"));
 
 		warpstone.data = warpstoneKey.getConfigurationSection("data");
+		if(warpstone.data==null) warpstone.data = warpstoneKey.createSection("data");
 
 		return warpstone;
 	}
