@@ -101,12 +101,12 @@ public class Warpstone {
 		}
 
 		warpstoneKey.set("disabled", isDisabled() ? true : null);
-		warpstoneKey.set("disable-msgd", getDisabledMsg());
+		warpstoneKey.set("disabled-msg", getDisabledMsg());
 		warpstoneKey.set("require-perm", requiresPerm() ? true : null);
 		warpstoneKey.set("condition", getCondition());
 		warpstoneKey.set("display-name", getDisplayName());
 
-		data.getValues(true).forEach((key,value) -> warpstoneKey.set(key, value));
+		data.getValues(true).forEach((key,value) -> warpstoneKey.set(identifier+"."+key, value));
 
 		return warpstoneKey;
 	}

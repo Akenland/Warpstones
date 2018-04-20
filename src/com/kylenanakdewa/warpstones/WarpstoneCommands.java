@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.rmi.CORBA.Util;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -102,10 +104,17 @@ final class WarpstoneCommands implements TabExecutor {
 
         // Version command
         if(args[0].equalsIgnoreCase("version")){
-            sender.sendMessage(ConfigValues.color+"Warpstones "+plugin.getDescription().getVersion()+" by Kyle Necrowolf");
+            sender.sendMessage(ConfigValues.color+"Warpstones "+plugin.getDescription().getVersion()+" by Kyle Nanakdewa");
             sender.sendMessage(CommonColors.MESSAGE+"- A uniquely immersive warping system, based around floating structures known as Warpstones.");
-            sender.sendMessage(CommonColors.MESSAGE+"- Website: http://WolfiaMC.com/plugins");
+            sender.sendMessage(CommonColors.MESSAGE+"- Website: http://plugins.akenland.com/");
 			return true;
+        }
+
+        // Reload command
+        if(args[0].equalsIgnoreCase("reload") && sender.hasPermission("core.admin")){
+            plugin.reload();
+            Utils.notifyAdmins(sender.getName()+" reloaded Warpstones");
+            return true;
         }
 
 
