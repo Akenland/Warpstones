@@ -50,7 +50,8 @@ final class DynmapWarpstones implements Listener {
             String id = warpstone.getIdentifier();
             String label = warpstone.getDisplayName()==null ? "Warpstone" : warpstone.getDisplayName();
             Location loc = warpstone.getLocation();
-            getMarkerSet().createMarker(id, label, loc.getWorld().getName(), loc.getX(), loc.getY(), loc.getZ(), getMarkerIcon(), false);
+            if(loc!=null && loc.getWorld()!=null)
+                getMarkerSet().createMarker(id, label, loc.getWorld().getName(), loc.getX(), loc.getY(), loc.getZ(), getMarkerIcon(), false);
         }
     }
 
