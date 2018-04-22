@@ -1,7 +1,8 @@
-package com.KyleNecrowolf.Warpstones.Items;
+package com.kylenanakdewa.warpstones.items;
 
-import com.KyleNecrowolf.Warpstones.Main;
-import com.KyleNecrowolf.Warpstones.Warpstone;
+import com.kylenanakdewa.warpstones.Warpstone;
+import com.kylenanakdewa.warpstones.WarpstonesPlugin;
+
 import java.util.Arrays;
 
 import org.bukkit.Bukkit;
@@ -47,7 +48,7 @@ public final class WarpItems {
         if(linkedShard.isSimilar(WARP_SHARD)){
             ItemMeta itemMeta = linkedShard.getItemMeta();
             itemMeta.setLore(Arrays.asList(
-                ChatColor.BLUE.toString()+ChatColor.MAGIC.toString()+warpstone.getName(), 
+                ChatColor.BLUE.toString()+ChatColor.MAGIC.toString()+warpstone.getIdentifier(), 
                 ChatColor.GRAY.toString()+warpstone.getLocation().getBlockX()+" "+warpstone.getLocation().getBlockZ()
                 ));
             linkedShard.setItemMeta(itemMeta);
@@ -83,7 +84,7 @@ public final class WarpItems {
         String warpstoneName = ChatColor.stripColor(warpShard.getItemMeta().getLore().get(0));
 
         // Return the warpstone
-        return new Warpstone(warpstoneName);
+        return Warpstone.get(warpstoneName);
     }
 
 
@@ -91,7 +92,7 @@ public final class WarpItems {
     // Warp Shard
     public static final ShapedRecipe getWarpShardRecipe(){
         // Prepare a shaped recipe with a key called warp_shard and a result of WARP_SHARD
-        ShapedRecipe warpShardRecipe = new ShapedRecipe(new NamespacedKey(Main.plugin, "warp_shard"), WARP_SHARD);
+        ShapedRecipe warpShardRecipe = new ShapedRecipe(new NamespacedKey(WarpstonesPlugin.plugin, "warp_shard"), WARP_SHARD);
         
         // Set the ingredients to 2x2 warp dust
         warpShardRecipe.shape("DD","DD");

@@ -1,4 +1,4 @@
-package com.KyleNecrowolf.Warpstones;
+package com.kylenanakdewa.warpstones;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -9,7 +9,7 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.command.CommandSender;
 
-import com.KyleNecrowolf.RealmsCore.Common.Utils;
+import com.kylenanakdewa.core.common.Utils;
 
 final class WarpUtils {
 	

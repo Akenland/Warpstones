@@ -1,9 +1,12 @@
-# Warpstones by Kyle Necrowolf
+# Warpstones by Kyle Nanakdewa
 # Configuration
 
 general:
   # The accent color to use for warpstones messages. Default BLUE.
   color: BLUE
+
+  # The name for a warpstone. Change this if you prefer to use a different term than "warpstone", and it will change everywhere in the plugin.
+  warpstone-name: Warpstone
 
 
 teleportation:
@@ -35,11 +38,23 @@ warpstones:
 
 
 items:
-  # Chance of players receiving a warp dust when activating a warpstone. Default 25%.
-  warp-dust-chance: 25
+  # Chance of players receiving a warp dust when activating a warpstone. Default 50%.
+  warp-dust-chance: 50
 
   # Whether Warp Shards can be crafted by players (from 4 warp dust). Default true.
   warp-shards-craftable: true
 
   # Whether Warp Shards can be linked and used at warpstones. Default true. 
   warp-shards-usable: true
+
+  # These options affect how the items appear in-game.
+  # WARNING: Changing these values will break all existing warpstone items, as well as the default custom textures!
+  display:
+    # The color of text for the items. Default BLUE.
+    item-color: BLUE
+
+    # The name of Warp Dust. Default "Warp Dust".
+    warp-dust-name: Warp Dust
+
+    # The name of Warp Shards. Default "Warp Shard".
+    warp-shard-name: Warp Shard

@@ -1,10 +1,10 @@
-package com.KyleNecrowolf.Warpstones;
+package com.kylenanakdewa.warpstones;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 
-import com.KyleNecrowolf.RealmsCore.Common.Utils;
+import com.kylenanakdewa.core.common.Utils;
 import com.sk89q.worldedit.CuboidClipboard;
 import com.sk89q.worldedit.schematic.SchematicFormat;
 import com.sk89q.worldedit.data.DataException;
@@ -27,10 +27,10 @@ enum WarpstoneDesigns {
         String schemName = this.name().toLowerCase() + size + ThreadLocalRandom.current().nextInt(3) + ".schematic";
         
         // Save the schem from the jar
-        Main.plugin.saveResource("schematics\\"+schemName, false);
+        WarpstonesPlugin.plugin.saveResource("schematics\\"+schemName, false);
         
         // Attempt to load it
-        File schemFile = new File(Main.plugin.getDataFolder(), "schematics\\"+schemName);
+        File schemFile = new File(WarpstonesPlugin.plugin.getDataFolder(), "schematics\\"+schemName);
         //SchematicFormat schem = SchematicFormat.getFormat(schemFile);
         try {
             return SchematicFormat.MCEDIT.load(schemFile);
