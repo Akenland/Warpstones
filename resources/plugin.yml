@@ -11,7 +11,7 @@ softdepend: [WorldEdit]
 commands:
   warpstones:
     description: Warp to a warpstone
-    aliases: [warpstone, wstone, ws, warp, warps, home, last, spawn, sethome]
+    aliases: [ws, warp, home, last, spawn, sethome]
   tp:
     description: Teleport to another player
     aliases: [tpa]
