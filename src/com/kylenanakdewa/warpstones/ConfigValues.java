@@ -44,7 +44,7 @@ public final class ConfigValues {
 
     //// Warpstones
     // Spawn warpstone - used for /spawn and default home
-    public static Warpstone warpstoneSpawn = Warpstone.get(configFile.getString("warpstones.spawn-warpstone"));
+    public static String warpstoneSpawn = configFile.getString("warpstones.spawn-warpstone");
 
     // Whether to generate biome/temperature-specific warpstones
     public static boolean generateBiomeWarpstones = configFile.getBoolean("warpstones.generate-biome-warpstones");

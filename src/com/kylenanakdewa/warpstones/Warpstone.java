@@ -58,7 +58,7 @@ public class Warpstone {
 	 * @return the spawn warpstone, or null if it does not exist
 	 */
 	public static Warpstone getSpawn(){
-		return ConfigValues.warpstoneSpawn;
+		return Warpstone.get(ConfigValues.warpstoneSpawn);
 	}
 
 	/**
