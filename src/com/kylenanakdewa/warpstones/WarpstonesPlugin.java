@@ -102,6 +102,14 @@ public final class WarpstonesPlugin extends JavaPlugin {
 	static Map<String,Warpstone> getWarpstones(){
 		return warpstones;
 	}
+	/**
+	 * Deletes a Warpstone. This action is permanent.
+	 * @param warpstone the identifier of the Warpstone to delete
+	 */
+	static void deleteWarpstone(String identifier){
+		warpstones.remove(identifier);
+		getWarpstonesFile().set(identifier, null);
+	}
 
 	/**
 	 * Loads Warpstones from file.

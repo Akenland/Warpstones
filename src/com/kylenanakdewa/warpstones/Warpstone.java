@@ -117,7 +117,7 @@ public class Warpstone {
 	 */
 	public void delete(){
 		setDisabled(true);
-		WarpstonesPlugin.getWarpstones().remove(identifier, this);
+		WarpstonesPlugin.deleteWarpstone(identifier);
 	}
 
 
