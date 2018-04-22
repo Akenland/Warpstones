@@ -356,7 +356,7 @@ public class Warpstone {
 
 		// Set the command
 		BlockState cmdBlockState = cmdBlock.getState();
-		((CommandBlock) cmdBlockState).setCommand("/warpstone enter "+identifier+" @p[r=2]");
+		((CommandBlock) cmdBlockState).setCommand("/warpstones enter "+identifier+" @p[r=2]");
 		cmdBlockState.update(true);
 
 		// Place a pressure plate above
