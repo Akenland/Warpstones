@@ -426,7 +426,8 @@ public class Warpstone {
 
 		// If this is spawn warpstone
 		if(this.equals(Warpstone.getSpawn())){
-			prompt.addQuestion("This is the spawn warpstone. Return here with "+ConfigValues.color+"/spawn"+CommonColors.MESSAGE+". "+"Warpstones allow you to fast travel to previously visited locations.");
+			prompt.addQuestion("This is the spawn warpstone. Return here with "+ConfigValues.color+"/spawn");
+			prompt.addQuestion(CommonColors.MESSAGE+"Warpstones allow you to fast travel to previously visited locations.");
 			questionSet = true;
 		} else {
 			prompt.addAnswer("Warp to spawn", "warp_spawn");
