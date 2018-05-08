@@ -3,6 +3,7 @@ package com.kylenanakdewa.warpstones.items;
 import com.kylenanakdewa.warpstones.Warpstone;
 import com.kylenanakdewa.warpstones.WarpstonesPlugin;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -48,10 +49,10 @@ public final class WarpItems {
 		// If it's a warp shard, add the warpstone name in the lore, hidden with magic text (&k), and the X and Z co-ords
 		if(linkedShard.isSimilar(WARP_SHARD)){
 			ItemMeta itemMeta = linkedShard.getItemMeta();
-			List<String> loreText = Arrays.asList(
+			List<String> loreText = new ArrayList<String>(Arrays.asList(
 				ChatColor.BLUE.toString()+ChatColor.MAGIC.toString()+warpstone.getIdentifier(),
 				ChatColor.GRAY.toString()+warpstone.getLocation().getBlockX()+" "+warpstone.getLocation().getBlockZ()
-				);
+				));
 			if(warpstone.getDisplayName()!=null) loreText.add(ChatColor.GRAY+warpstone.getDisplayName());
 			itemMeta.setLore(loreText);
 			linkedShard.setItemMeta(itemMeta);
