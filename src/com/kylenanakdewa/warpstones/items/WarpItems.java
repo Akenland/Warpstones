@@ -33,10 +33,10 @@ public final class WarpItems {
 
 	//// Items
 	// Warp Dust
-	public static ItemStack WARP_DUST = getRenamedLapis("Warp Dust");
+	public static ItemStack WARP_DUST = new ItemStack(getRenamedLapis("Warp Dust"));
 
 	// Warp Shard
-	public static ItemStack WARP_SHARD = getRenamedLapis("Warp Shard");
+	public static ItemStack WARP_SHARD = new ItemStack(getRenamedLapis("Warp Shard"));
 
 
 	//// Warp Shards

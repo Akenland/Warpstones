@@ -251,13 +251,13 @@ final class WarpstoneCommands implements TabExecutor {
             ItemStack item = null;
             switch(args[1]){
                 case "warp_dust":
-                    item = WarpItems.WARP_DUST;
+                    item = new ItemStack(WarpItems.WARP_DUST);
                     break;
                 case "warp_shard":
-                    item = WarpItems.WARP_SHARD;
+                    item = new ItemStack(WarpItems.WARP_SHARD);
                     break;
                 case "warp_shard_linked":
-                    if(args.length==3) item = WarpItems.getLinkedWarpShard(Warpstone.get(args[2]));
+                    if(args.length==3) item = new ItemStack(WarpItems.getLinkedWarpShard(Warpstone.get(args[2])));
                     break;
                 default:
                     break;
