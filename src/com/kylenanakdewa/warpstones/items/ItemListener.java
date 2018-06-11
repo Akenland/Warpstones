@@ -10,6 +10,7 @@ import com.kylenanakdewa.warpstones.Warpstone;
 import com.kylenanakdewa.warpstones.events.WarpstoneActivateEvent;
 import com.kylenanakdewa.warpstones.events.PlayerWarpEvent.WarpCause;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -18,6 +19,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -48,7 +50,7 @@ public final class ItemListener implements Listener {
 	 */
 	public static void giveRandomWarpDust(Player player){
 		if(ThreadLocalRandom.current().nextInt(100) > 100-ConfigValues.warpDustChance){
-			int count = ThreadLocalRandom.current().nextInt(4);
+			int count = ThreadLocalRandom.current().nextInt(6);
 			ItemStack dust = new ItemStack(WarpItems.WARP_DUST);
 			dust.setAmount(count);
 			player.getInventory().addItem(dust);
@@ -106,6 +108,17 @@ public final class ItemListener implements Listener {
 		// If player is breaking lapis ore, event drops items, and item used does not have silk touch
 		if(event.getBlock().getType().equals(Material.LAPIS_ORE) && event.isDropItems() && !event.getPlayer().getEquipment().getItemInMainHand().containsEnchantment(Enchantment.SILK_TOUCH)){
 			giveRandomWarpDust(event.getPlayer());
+		}
+	}
+
+
+	/**
+	 * Fix warp shards when they're modified at an anvil.
+	 */
+	@EventHandler
+	public void onWarpShardAnvil(PrepareAnvilEvent event){
+		if(WarpItems.isWarpShardLinked(event.getInventory().getItem(0))){
+			event.getResult().getItemMeta().setDisplayName(ChatColor.BLUE+"Warp Shard");
 		}
 	}
 
