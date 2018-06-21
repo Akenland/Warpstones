@@ -13,7 +13,6 @@ import com.kylenanakdewa.warpstones.events.PlayerWarpEvent.WarpCause;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -48,13 +47,14 @@ public final class ItemListener implements Listener {
 	/**
 	 * Gives a random amount of Warp Dust to the specified player.
 	 */
-	public static void giveRandomWarpDust(Player player){
+	public static ItemStack getRandomWarpDust(){
 		if(ThreadLocalRandom.current().nextInt(100) > 100-ConfigValues.warpDustChance){
 			int count = ThreadLocalRandom.current().nextInt(6);
 			ItemStack dust = new ItemStack(WarpItems.WARP_DUST);
 			dust.setAmount(count);
-			player.getInventory().addItem(dust);
+			return dust;
 		}
+		return new ItemStack(Material.AIR);
 	}
 
 
@@ -99,7 +99,7 @@ public final class ItemListener implements Listener {
 
 		// If this isn't the last warpstone they visited, get a random number to see if they get a warp dust
 		if(!event.isLastWarpstone() && !event.isHomeWarpstone() && !event.isSpawnWarpstone()){
-			giveRandomWarpDust(event.getPlayer());
+			event.getPlayer().getInventory().addItem(getRandomWarpDust());
 		}
 	}
 
@@ -107,7 +107,7 @@ public final class ItemListener implements Listener {
 	public void onLapisOreBreak(BlockBreakEvent event){
 		// If player is breaking lapis ore, event drops items, and item used does not have silk touch
 		if(event.getBlock().getType().equals(Material.LAPIS_ORE) && event.isDropItems() && !event.getPlayer().getEquipment().getItemInMainHand().containsEnchantment(Enchantment.SILK_TOUCH)){
-			giveRandomWarpDust(event.getPlayer());
+			event.getBlock().getLocation().getWorld().dropItemNaturally(event.getBlock().getLocation(), getRandomWarpDust());
 		}
 	}
 
