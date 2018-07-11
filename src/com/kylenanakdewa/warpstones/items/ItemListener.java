@@ -13,10 +13,12 @@ import com.kylenanakdewa.warpstones.events.PlayerWarpEvent.WarpCause;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.enchantments.EnchantmentOffer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.CraftingInventory;
@@ -107,7 +109,17 @@ public final class ItemListener implements Listener {
 	public void onLapisOreBreak(BlockBreakEvent event){
 		// If player is breaking lapis ore, event drops items, and item used does not have silk touch
 		if(event.getBlock().getType().equals(Material.LAPIS_ORE) && event.isDropItems() && !event.getPlayer().getEquipment().getItemInMainHand().containsEnchantment(Enchantment.SILK_TOUCH)){
-			event.getBlock().getLocation().getWorld().dropItemNaturally(event.getBlock().getLocation(), getRandomWarpDust());
+			ItemStack dust = getRandomWarpDust();
+
+			// Fortune boost
+			if(event.getPlayer().getEquipment().getItemInMainHand().getEnchantmentLevel(Enchantment.LOOT_BONUS_BLOCKS) > (ThreadLocalRandom.current().nextInt(10)+1)){
+				dust.setAmount(dust.getAmount()*2);
+			}
+
+			// getRandomWarpDust() can return air, and Bukkit doesn't allow air to be dropped
+			if(!dust.getType().equals(Material.AIR)){
+				event.getBlock().getLocation().getWorld().dropItemNaturally(event.getBlock().getLocation(), dust);
+			}
 		}
 	}
 
@@ -117,8 +129,38 @@ public final class ItemListener implements Listener {
 	 */
 	@EventHandler
 	public void onWarpShardAnvil(PrepareAnvilEvent event){
-		if(WarpItems.isWarpShardLinked(event.getInventory().getItem(0))){
-			event.getResult().getItemMeta().setDisplayName(ChatColor.BLUE+"Warp Shard");
+		// If slot 0 is shard, and slot 1 is enchanted book
+		ItemStack target = event.getInventory().getItem(0);
+		ItemStack book = event.getInventory().getItem(1);
+		if(WarpItems.isWarpShard(target) && book.getType().equals(Material.ENCHANTED_BOOK)){
+			target.addEnchantment(Enchantment.DURABILITY, book.getEnchantmentLevel(Enchantment.DURABILITY));
+			target.addEnchantment(Enchantment.VANISHING_CURSE, book.getEnchantmentLevel(Enchantment.VANISHING_CURSE));
+			event.getInventory().setRepairCost(5*target.getEnchantmentLevel(Enchantment.DURABILITY) + 5*target.getEnchantmentLevel(Enchantment.VANISHING_CURSE));
+			event.setResult(target);
+		}
+	}
+
+
+	/**
+	 * Allow warp shards to be enchanted.
+	 */
+	@EventHandler
+	public void onWarpShardEnchant(PrepareItemEnchantEvent event){
+		ItemStack target = event.getItem();
+		if(WarpItems.isWarpShard(target)){
+			for(EnchantmentOffer offer : event.getOffers()){
+				if(ThreadLocalRandom.current().nextBoolean()){
+					offer.setEnchantment(Enchantment.DURABILITY);
+					int level = ThreadLocalRandom.current().nextInt(event.getEnchantmentBonus()*2);
+					offer.setEnchantmentLevel(level/3);
+					offer.setCost(level);
+				} else {
+					offer.setEnchantment(Enchantment.VANISHING_CURSE);
+					offer.setEnchantmentLevel(1);
+					offer.setCost(ThreadLocalRandom.current().nextInt(event.getEnchantmentBonus()*2));
+				}
+			}
+			event.setCancelled(false);
 		}
 	}
 

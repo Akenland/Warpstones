@@ -47,7 +47,7 @@ public final class WarpItems {
 		ItemStack linkedShard = existingWarpShard;
 
 		// If it's a warp shard, add the warpstone name in the lore, hidden with magic text (&k), and the X and Z co-ords
-		if(linkedShard.isSimilar(WARP_SHARD)){
+		if(isWarpShard(linkedShard)){
 			ItemMeta itemMeta = linkedShard.getItemMeta();
 			List<String> loreText = new ArrayList<String>(Arrays.asList(
 				ChatColor.BLUE.toString()+ChatColor.MAGIC.toString()+warpstone.getIdentifier(),
