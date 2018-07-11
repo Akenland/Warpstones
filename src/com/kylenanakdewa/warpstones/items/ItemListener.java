@@ -10,7 +10,6 @@ import com.kylenanakdewa.warpstones.Warpstone;
 import com.kylenanakdewa.warpstones.events.WarpstoneActivateEvent;
 import com.kylenanakdewa.warpstones.events.PlayerWarpEvent.WarpCause;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentOffer;
@@ -148,16 +147,12 @@ public final class ItemListener implements Listener {
 	public void onWarpShardEnchant(PrepareItemEnchantEvent event){
 		ItemStack target = event.getItem();
 		if(WarpItems.isWarpShard(target)){
-			for(EnchantmentOffer offer : event.getOffers()){
+			for(int i=0; i<event.getOffers().length; i++){
 				if(ThreadLocalRandom.current().nextBoolean()){
-					offer.setEnchantment(Enchantment.DURABILITY);
 					int level = ThreadLocalRandom.current().nextInt(event.getEnchantmentBonus()*2);
-					offer.setEnchantmentLevel(level/3);
-					offer.setCost(level);
+					event.getOffers()[i] = new EnchantmentOffer(Enchantment.DURABILITY, level/3, level);
 				} else {
-					offer.setEnchantment(Enchantment.VANISHING_CURSE);
-					offer.setEnchantmentLevel(1);
-					offer.setCost(ThreadLocalRandom.current().nextInt(event.getEnchantmentBonus()*2));
+					event.getOffers()[i] = new EnchantmentOffer(Enchantment.VANISHING_CURSE, 1, ThreadLocalRandom.current().nextInt(event.getEnchantmentBonus()*2));
 				}
 			}
 			event.setCancelled(false);
