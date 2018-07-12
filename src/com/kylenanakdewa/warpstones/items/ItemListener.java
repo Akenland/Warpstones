@@ -18,6 +18,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
@@ -130,9 +131,9 @@ public final class ItemListener implements Listener {
 	@EventHandler
 	public void onWarpShardAnvil(PrepareAnvilEvent event){
 		// If slot 0 is shard, and slot 1 is enchanted book
-		ItemStack target = event.getInventory().getItem(0);
+		ItemStack target = new ItemStack(event.getInventory().getItem(0));
 		ItemStack book = event.getInventory().getItem(1);
-		if(WarpItems.isWarpShard(target) && book.getType().equals(Material.ENCHANTED_BOOK)){
+		if(WarpItems.isWarpShard(target) && book!=null && book.getType().equals(Material.ENCHANTED_BOOK)){
 			// Unbreaking
 			int unbreakingLvl = book.getEnchantmentLevel(Enchantment.DURABILITY);
 			if(unbreakingLvl>0) target.addUnsafeEnchantment(Enchantment.DURABILITY, unbreakingLvl);
@@ -149,17 +150,29 @@ public final class ItemListener implements Listener {
 	 * Allow warp shards to be enchanted.
 	 */
 	@EventHandler
-	public void onWarpShardEnchant(PrepareItemEnchantEvent event){
+	public void onPrepareWarpShardEnchant(PrepareItemEnchantEvent event){
 		ItemStack target = event.getItem();
 		if(WarpItems.isWarpShard(target)){
 			for(int i=0; i<event.getOffers().length; i++){
 				if(ThreadLocalRandom.current().nextBoolean()){
 					int level = ThreadLocalRandom.current().nextInt(event.getEnchantmentBonus()*2);
-					event.getOffers()[i] = new EnchantmentOffer(Enchantment.DURABILITY, level/3, level);
+					event.getOffers()[i] = new EnchantmentOffer(Enchantment.DURABILITY, Math.max(level/3, 10), level+5);
 				} else {
-					event.getOffers()[i] = new EnchantmentOffer(Enchantment.VANISHING_CURSE, 1, ThreadLocalRandom.current().nextInt(event.getEnchantmentBonus()*2));
+					event.getOffers()[i] = new EnchantmentOffer(Enchantment.VANISHING_CURSE, 1, ThreadLocalRandom.current().nextInt(event.getEnchantmentBonus()*2+5));
 				}
 			}
+			event.setCancelled(false);
+		}
+	}
+	@EventHandler
+	public void onWarpShardEnchant(EnchantItemEvent event){
+		if(WarpItems.isWarpShard(event.getItem())){
+			// Chance to reduce Unbreaking level
+			if(event.getEnchantsToAdd().containsKey(Enchantment.DURABILITY) && ThreadLocalRandom.current().nextBoolean()){
+				int newLvl = Math.min(1, event.getEnchantsToAdd().get(Enchantment.DURABILITY) - ThreadLocalRandom.current().nextInt(10));
+				event.getEnchantsToAdd().put(Enchantment.DURABILITY, newLvl);
+			}
+
 			event.setCancelled(false);
 		}
 	}
