@@ -131,9 +131,11 @@ public final class ItemListener implements Listener {
 	@EventHandler
 	public void onWarpShardAnvil(PrepareAnvilEvent event){
 		// If slot 0 is shard, and slot 1 is enchanted book
-		ItemStack target = new ItemStack(event.getInventory().getItem(0));
+		ItemStack target = event.getInventory().getItem(0);
 		ItemStack book = event.getInventory().getItem(1);
 		if(WarpItems.isWarpShard(target) && book!=null && book.getType().equals(Material.ENCHANTED_BOOK)){
+			target = new ItemStack(target);
+
 			// Unbreaking
 			int unbreakingLvl = book.getEnchantmentLevel(Enchantment.DURABILITY);
 			if(unbreakingLvl>0) target.addUnsafeEnchantment(Enchantment.DURABILITY, unbreakingLvl);
