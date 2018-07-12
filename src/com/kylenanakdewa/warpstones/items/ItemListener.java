@@ -10,6 +10,7 @@ import com.kylenanakdewa.warpstones.Warpstone;
 import com.kylenanakdewa.warpstones.events.WarpstoneActivateEvent;
 import com.kylenanakdewa.warpstones.events.PlayerWarpEvent.WarpCause;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentOffer;
@@ -106,8 +107,8 @@ public final class ItemListener implements Listener {
 
 	@EventHandler
 	public void onLapisOreBreak(BlockBreakEvent event){
-		// If player is breaking lapis ore, event drops items, and item used does not have silk touch
-		if(event.getBlock().getType().equals(Material.LAPIS_ORE) && event.isDropItems() && !event.getPlayer().getEquipment().getItemInMainHand().containsEnchantment(Enchantment.SILK_TOUCH)){
+		// If player is breaking lapis ore, event drops items, item used does not have silk touch, and player not in creative
+		if(event.getBlock().getType().equals(Material.LAPIS_ORE) && event.isDropItems() && !event.getPlayer().getEquipment().getItemInMainHand().containsEnchantment(Enchantment.SILK_TOUCH) && !event.getPlayer().getGameMode().equals(GameMode.CREATIVE)){
 			ItemStack dust = getRandomWarpDust();
 
 			// Fortune boost
@@ -132,8 +133,12 @@ public final class ItemListener implements Listener {
 		ItemStack target = event.getInventory().getItem(0);
 		ItemStack book = event.getInventory().getItem(1);
 		if(WarpItems.isWarpShard(target) && book.getType().equals(Material.ENCHANTED_BOOK)){
-			target.addEnchantment(Enchantment.DURABILITY, book.getEnchantmentLevel(Enchantment.DURABILITY));
-			target.addEnchantment(Enchantment.VANISHING_CURSE, book.getEnchantmentLevel(Enchantment.VANISHING_CURSE));
+			// Unbreaking
+			int unbreakingLvl = book.getEnchantmentLevel(Enchantment.DURABILITY);
+			if(unbreakingLvl>0) target.addUnsafeEnchantment(Enchantment.DURABILITY, unbreakingLvl);
+			// Vanishing
+			if(book.containsEnchantment(Enchantment.VANISHING_CURSE)) target.addEnchantment(Enchantment.VANISHING_CURSE, 1);
+
 			event.getInventory().setRepairCost(5*target.getEnchantmentLevel(Enchantment.DURABILITY) + 5*target.getEnchantmentLevel(Enchantment.VANISHING_CURSE));
 			event.setResult(target);
 		}
