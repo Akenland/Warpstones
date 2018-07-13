@@ -87,16 +87,16 @@ public final class EventListener implements Listener {
 			WarpPlayer player = new WarpPlayer(event.getPlayer());
 			switch(event.getAction()){
 				case "home":
-					player.warpHome(false, WarpCause.WARPSTONE);
+					player.warpHome(true, WarpCause.WARPSTONE);
 					break;
 				case "last":
-					player.warpLast(false, WarpCause.WARPSTONE);
+					player.warpLast(true, WarpCause.WARPSTONE);
 					break;
 				case "spawn":
-					player.warpSpawn(false, WarpCause.WARPSTONE);
+					player.warpSpawn(true, WarpCause.WARPSTONE);
 					break;
 				default:
-					player.warp(Warpstone.get(event.getAction()), false, WarpCause.WARPSTONE);
+					player.warp(Warpstone.get(event.getAction()), true, WarpCause.WARPSTONE);
 					break;
 			}
 		}
