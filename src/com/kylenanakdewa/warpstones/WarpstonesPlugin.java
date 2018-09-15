@@ -99,7 +99,7 @@ public final class WarpstonesPlugin extends JavaPlugin {
 	/**
 	 * Gets a Map of Warpstones on the server, sorted by their identifier.
 	 */
-	static Map<String,Warpstone> getWarpstones(){
+	public static Map<String,Warpstone> getWarpstones(){
 		return warpstones;
 	}
 	/**
