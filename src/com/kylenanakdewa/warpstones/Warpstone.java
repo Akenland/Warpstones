@@ -75,14 +75,14 @@ public class Warpstone {
 			double z = warpstoneKey.getDouble("location.z");
 			float yaw = (float) warpstoneKey.getDouble("location.yaw");
 			float pitch = (float) warpstoneKey.getDouble("location.pitch");
-			warpstone.setLocation(new Location(world, x, y, z, yaw, pitch));
+			warpstone.location = new Location(world, x, y, z, yaw, pitch);
 		}
 
-		warpstone.setDisabled(warpstoneKey.getBoolean("disabled"));
-		warpstone.setDisabledMsg(warpstoneKey.getString("disabled-msg"));
-		warpstone.setRequirePerm(warpstoneKey.getBoolean("require-perm"));
-		warpstone.setCondition(warpstoneKey.getString("condition"));
-		warpstone.setDisplayName(warpstoneKey.getString("display-name"));
+		warpstone.disabled = (warpstoneKey.getBoolean("disabled"));
+		warpstone.disabledMsg = (warpstoneKey.getString("disabled-msg"));
+		warpstone.requirePerm = (warpstoneKey.getBoolean("require-perm"));
+		warpstone.condition = (warpstoneKey.getString("condition"));
+		warpstone.displayName = (warpstoneKey.getString("display-name"));
 
 		return warpstone;
 	}
