@@ -13,8 +13,6 @@ public abstract class WarpstoneSaveDataSection extends SaveDataSection {
 
     /** The Warpstone that this save data is for. */
     protected final Warpstone warpstone;
-    /** The plugin that owns this save data. */
-    protected final Plugin plugin;
 
     /**
      * Creates or retrieves a SaveDataSection for the specified Warpstone and plugin.
@@ -24,7 +22,6 @@ public abstract class WarpstoneSaveDataSection extends SaveDataSection {
     public WarpstoneSaveDataSection(Warpstone warpstone, Plugin plugin){
         super(warpstone.getData(plugin));
         this.warpstone = warpstone;
-        this.plugin = plugin;
     }
 
 
@@ -34,14 +31,6 @@ public abstract class WarpstoneSaveDataSection extends SaveDataSection {
      */
     public Warpstone getWarpstone(){
         return warpstone;
-    }
-
-    /**
-     * Gets the Plugin that owns this save data.
-     * @return the Plugin that stored this data
-     */
-    protected final Plugin getPlugin(){
-        return plugin;
     }
 
     @Override

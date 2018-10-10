@@ -60,6 +60,26 @@ public class Warpstone {
 	public static Warpstone getSpawn(){
 		return Warpstone.get(ConfigValues.warpstoneSpawn);
 	}
+	/**
+	 * Gets the warpstone nearest the specified location.
+	 * @param location the location to search near
+	 * @param radius the maximum search radius
+	 * @param includeDisabled whether to include disabled warpstones
+	 * @return the nearest Warpstone, or null if one was not found
+	 */
+	public static Warpstone getNearest(Location location, double radius, boolean includeDisabled){
+		double radiusSquared = Math.pow(radius, 2);
+		Warpstone nearestStone = null;
+		double distanceSquared = radiusSquared;
+		for(Warpstone warpstone : WarpstonesPlugin.getWarpstones().values()){
+			if(warpstone.getLocation().getWorld().equals(location.getWorld()) && (nearestStone==null || warpstone.getLocation().distanceSquared(location) <= distanceSquared)){
+				nearestStone = warpstone;
+				distanceSquared = warpstone.getLocation().distanceSquared(location);
+			}
+		}
+
+		return nearestStone;
+	}
 
 	/**
 	 * Loads a Warpstone from a ConfigurationSection.
@@ -464,6 +484,6 @@ public class Warpstone {
 	public SaveDataSection getData(Plugin plugin){
 		ConfigurationSection pluginData = data.getConfigurationSection(plugin.getName());
 		if(pluginData==null) pluginData = data.createSection(plugin.getName());
-		return new SaveDataSection(pluginData);
+		return new SaveDataSection(pluginData, plugin);
 	}
 }
