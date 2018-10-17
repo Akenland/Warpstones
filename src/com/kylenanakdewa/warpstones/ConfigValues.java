@@ -59,4 +59,7 @@ public final class ConfigValues {
 
     // Whether Warp Shards can be used at warpstones
     public static boolean warpShardsUsable = configFile.getBoolean("items.warp-shards-usable");
+
+    // Whether compasses show distances to warpstones when held
+    public static boolean compassesShowDistances = configFile.getBoolean("items.compasses-show-distances");
 }

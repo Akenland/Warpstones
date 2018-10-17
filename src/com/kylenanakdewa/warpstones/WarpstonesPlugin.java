@@ -1,8 +1,16 @@
 package com.kylenanakdewa.warpstones;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Score;
+import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +37,9 @@ public final class WarpstonesPlugin extends JavaPlugin {
 	/** ConfigAccessor for warpstones.yml */
 	private static ConfigAccessor warpstonesConfigAccessor;
 
+	/** Compass task ID */
+	private static int compassTaskId = -1;
+
 
 	@Override
 	public void onEnable(){
@@ -46,6 +57,7 @@ public final class WarpstonesPlugin extends JavaPlugin {
 	public void onDisable(){
 		saveWarpstones();
 		HandlerList.unregisterAll(this);
+		Bukkit.getScheduler().cancelTasks(this);
 	}
 
 	/**
@@ -60,6 +72,9 @@ public final class WarpstonesPlugin extends JavaPlugin {
 
 		// Register recipes (and event listener)
 		if(ConfigValues.warpShardsCraftable) getServer().getPluginManager().registerEvents(new ItemListener(), this);
+
+		// Compass task
+		if(ConfigValues.compassesShowDistances) setupCompassTask();
 
 		loadWarpstones();
 
@@ -83,6 +98,55 @@ public final class WarpstonesPlugin extends JavaPlugin {
 			new DynmapWarpstones(this);
 			getLogger().info("Adding Warpstone markers to Dynmap!");
 		}
+	}
+
+	/**
+	 * Sets up the compass task.
+	 */
+	private void setupCompassTask(){
+		if(compassTaskId>0) return;
+		compassTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, ()->{
+			for(Player player : Bukkit.getOnlinePlayers()){
+				if((player.getInventory().getItemInMainHand()!=null && player.getInventory().getItemInMainHand().getType().equals(Material.COMPASS))
+				 || (player.getInventory().getItemInOffHand()!=null && player.getInventory().getItemInOffHand().getType().equals(Material.COMPASS))){
+	   
+				   // Create the scoreboard
+				   Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
+				   Objective obj = board.registerNewObjective("ws_distances", "dummy");
+				   obj.setDisplayName("Distance to");
+				   obj.setDisplaySlot(DisplaySlot.SIDEBAR);
+	   
+				   // Add entries
+				   WarpPlayer warpData = new WarpPlayer(player);
+				   Location pLoc = player.getLocation();
+				   Warpstone nearestStone = Warpstone.getNearest(player.getLocation(), 100, false);
+				   if(nearestStone!=null){
+					   Score nearest = obj.getScore("Nearest Warpstone");
+					   nearest.setScore((int)nearestStone.getLocation().distance(pLoc));
+				   }
+				   Warpstone homeStone = warpData.getHome();
+				   if(homeStone!=null && homeStone.getLocation().getWorld().equals(pLoc.getWorld())){
+					   Score home = obj.getScore("Home");
+					   home.setScore((int)homeStone.getLocation().distance(pLoc));
+				   }
+				   Warpstone lastStone = warpData.getLast();
+				   if(lastStone!=null && lastStone.getLocation().getWorld().equals(pLoc.getWorld())){
+					   Score last = obj.getScore("Last Warpstone");
+					   last.setScore((int)lastStone.getLocation().distance(pLoc));
+				   }
+				   Warpstone spawnStone = Warpstone.getSpawn();
+				   if(spawnStone!=null && spawnStone.getLocation().getWorld().equals(pLoc.getWorld())){
+					   Score spawn = obj.getScore("Spawn");
+					   spawn.setScore((int)spawnStone.getLocation().distance(pLoc));
+				   }
+	   
+				   player.setScoreboard(board);
+			   }
+			   else {
+				   player.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
+			   }
+			}
+		}, 60, 60);
 	}
 
 

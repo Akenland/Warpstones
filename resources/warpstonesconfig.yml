@@ -58,3 +58,6 @@ items:
 
     # The name of Warp Shards. Default "Warp Shard".
     warp-shard-name: Warp Shard
+  
+  # Whether compasses show distances to warpstones when held. Default true.
+  compasses-show-distances: true

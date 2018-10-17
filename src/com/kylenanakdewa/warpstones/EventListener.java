@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -14,12 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Score;
-import org.bukkit.scoreboard.Scoreboard;
 
 import com.kylenanakdewa.core.common.CommonColors;
 import com.kylenanakdewa.core.common.Utils;
@@ -107,47 +101,5 @@ public final class EventListener implements Listener {
 			}
 		}
 	}
-	
 
-	@EventHandler
-	public void onCompassHold(PlayerItemHeldEvent event){
-		if(event.getPlayer().getInventory().getItem(event.getNewSlot()).getType().equals(Material.COMPASS)
-		 || event.getPlayer().getInventory().getItemInOffHand().getType().equals(Material.COMPASS)){
-
-			// Create the scoreboard
-			Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
-			Objective obj = board.registerNewObjective("ws_distances", "dummy");
-			obj.setDisplayName("Distance to");
-			obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-
-			// Add entries
-			WarpPlayer warpData = new WarpPlayer(event.getPlayer());
-			Location pLoc = event.getPlayer().getLocation();
-			Warpstone nearestStone = Warpstone.getNearest(event.getPlayer().getLocation(), 100, false);
-			if(nearestStone!=null){
-				Score nearest = obj.getScore("Nearest Warpstone");
-				nearest.setScore((int)nearestStone.getLocation().distance(pLoc));
-			}
-			Warpstone homeStone = warpData.getHome();
-			if(homeStone!=null && homeStone.getLocation().getWorld().equals(pLoc.getWorld())){
-				Score home = obj.getScore("Home");
-				home.setScore((int)homeStone.getLocation().distance(pLoc));
-			}
-			Warpstone lastStone = warpData.getLast();
-			if(lastStone!=null && lastStone.getLocation().getWorld().equals(pLoc.getWorld())){
-				Score last = obj.getScore("Last Warpstone");
-				last.setScore((int)lastStone.getLocation().distance(pLoc));
-			}
-			Warpstone spawnStone = Warpstone.getSpawn();
-			if(spawnStone!=null && spawnStone.getLocation().getWorld().equals(pLoc.getWorld())){
-				Score spawn = obj.getScore("Spawn");
-				spawn.setScore((int)spawnStone.getLocation().distance(pLoc));
-			}
-
-			event.getPlayer().setScoreboard(board);
-		}
-		else {
-			event.getPlayer().setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
-		}
-	}
 }
