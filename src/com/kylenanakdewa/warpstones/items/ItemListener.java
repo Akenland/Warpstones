@@ -32,7 +32,7 @@ public final class ItemListener implements Listener {
 	public void onWarpShardCraft(CraftItemEvent event){
 		CraftingInventory inv = event.getInventory();
 		// If the item being crafted is a warp shard
-		if(inv.getResult().isSimilar(WarpItems.WARP_SHARD)){
+		if(inv.getResult()!=null && inv.getResult().isSimilar(WarpItems.WARP_SHARD)){
 			//Utils.notifyAdmins("A warp shard is being crafted.");
 
 			// Make sure every item is a warp dust, if not, cancel the crafting
