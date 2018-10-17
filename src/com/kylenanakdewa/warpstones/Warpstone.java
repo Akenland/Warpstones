@@ -72,7 +72,7 @@ public class Warpstone {
 		Warpstone nearestStone = null;
 		double distanceSquared = radiusSquared;
 		for(Warpstone warpstone : WarpstonesPlugin.getWarpstones().values()){
-			if(warpstone.getLocation().getWorld().equals(location.getWorld()) && (nearestStone==null || warpstone.getLocation().distanceSquared(location) <= distanceSquared)){
+			if(warpstone.getLocation()!=null && warpstone.getLocation().getWorld().equals(location.getWorld()) && (nearestStone==null || warpstone.getLocation().distanceSquared(location) <= distanceSquared)){
 				nearestStone = warpstone;
 				distanceSquared = warpstone.getLocation().distanceSquared(location);
 			}
