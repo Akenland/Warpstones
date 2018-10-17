@@ -111,7 +111,7 @@ public final class EventListener implements Listener {
 
 	@EventHandler
 	public void onCompassHold(PlayerItemHeldEvent event){
-		if(event.getPlayer().getInventory().getItemInMainHand().getType().equals(Material.COMPASS)
+		if(event.getPlayer().getInventory().getItem(event.getNewSlot()).getType().equals(Material.COMPASS)
 		 || event.getPlayer().getInventory().getItemInOffHand().getType().equals(Material.COMPASS)){
 
 			// Create the scoreboard
