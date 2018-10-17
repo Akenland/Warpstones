@@ -125,7 +125,7 @@ public final class WarpstonesPlugin extends JavaPlugin {
 				   Warpstone nearestStone = Warpstone.getNearest(player.getLocation(), 100, false);
 				   if(nearestStone!=null){
 					   // Admins see ID of nearest stone
-					   String nearestName = "Nearest Warpstone" + (player.hasPermission("warpstones.manage") ? " ("+nearestStone.getIdentifier()+")" : "");
+					   String nearestName = !player.hasPermission("warpstones.manage") ? "Nearest Warpstone" : "Nearest: "+nearestStone.getIdentifier();
 					   Score nearest = obj.getScore(nearestName);
 					   nearest.setScore((int)nearestStone.getLocation().distance(pLoc));
 				   }
