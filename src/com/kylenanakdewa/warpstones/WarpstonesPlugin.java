@@ -110,8 +110,9 @@ public final class WarpstonesPlugin extends JavaPlugin {
 				// Skip players more than 25k blocks from origin
 				if(player.getLocation().getX()>25000||player.getLocation().getX()<-25000 || player.getLocation().getZ()>25000||player.getLocation().getZ()<-25000) return;
 
-				if((player.getInventory().getItemInMainHand()!=null && player.getInventory().getItemInMainHand().getType().equals(Material.COMPASS))
-				 || (player.getInventory().getItemInOffHand()!=null && player.getInventory().getItemInOffHand().getType().equals(Material.COMPASS))){
+				if(((player.getInventory().getItemInMainHand()!=null && player.getInventory().getItemInMainHand().getType().equals(Material.COMPASS))
+				 || (player.getInventory().getItemInOffHand()!=null && player.getInventory().getItemInOffHand().getType().equals(Material.COMPASS)))
+				 && player.getScoreboard().equals(Bukkit.getScoreboardManager().getMainScoreboard())){
 	   
 				   // Create the scoreboard
 				   Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
