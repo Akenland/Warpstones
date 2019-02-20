@@ -152,7 +152,7 @@ public final class WarpstonesPlugin extends JavaPlugin {
 				   player.setScoreboard(Bukkit.getScoreboardManager().getMainScoreboard());
 			   }
 			}
-		}, 20, 20);
+		}, 10, 10);
 	}
 
 

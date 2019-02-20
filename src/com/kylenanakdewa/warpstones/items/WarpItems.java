@@ -13,7 +13,7 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.material.Dye;
 
@@ -94,13 +94,12 @@ public final class WarpItems {
 
 	//// Recipes
 	// Warp Shard
-	public static final ShapedRecipe getWarpShardRecipe(){
+	public static final ShapelessRecipe getWarpShardRecipe(){
 		// Prepare a shaped recipe with a key called warp_shard and a result of WARP_SHARD
-		ShapedRecipe warpShardRecipe = new ShapedRecipe(new NamespacedKey(WarpstonesPlugin.plugin, "warp_shard"), WARP_SHARD);
+		ShapelessRecipe warpShardRecipe = new ShapelessRecipe(new NamespacedKey(WarpstonesPlugin.plugin, "warp_shard"), WARP_SHARD);
 
-		// Set the ingredients to 2x2 warp dust
-		warpShardRecipe.shape("DD","DD");
-		warpShardRecipe.setIngredient('D', new Dye(DyeColor.BLUE));
+		// Set the ingredients to 2 warp dust
+		warpShardRecipe.addIngredient(2, new Dye(DyeColor.BLUE));
 
 		return warpShardRecipe;
 	}

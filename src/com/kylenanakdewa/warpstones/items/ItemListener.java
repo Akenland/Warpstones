@@ -52,7 +52,7 @@ public final class ItemListener implements Listener {
 	 */
 	public static ItemStack getRandomWarpDust(){
 		if(ThreadLocalRandom.current().nextInt(100) > 100-ConfigValues.warpDustChance){
-			int count = ThreadLocalRandom.current().nextInt(6);
+			int count = ThreadLocalRandom.current().nextInt(9);
 			ItemStack dust = new ItemStack(WarpItems.WARP_DUST);
 			dust.setAmount(count);
 			return dust;
@@ -83,7 +83,7 @@ public final class ItemListener implements Listener {
 				Utils.sendActionBar(event.getPlayer(), "Warping to shard's stored destination...");
 
 				// Take shard, if unbreaking chance is too low
-				if(itemInHand.getEnchantmentLevel(Enchantment.DURABILITY)<ThreadLocalRandom.current().nextInt(1,10)){
+				if((itemInHand.getEnchantmentLevel(Enchantment.DURABILITY)*2)<ThreadLocalRandom.current().nextInt(1,10)){
 					itemInHand.setAmount(itemInHand.getAmount()-1);
 				}
 				event.getPlayer().getEquipment().setItemInMainHand(itemInHand);
