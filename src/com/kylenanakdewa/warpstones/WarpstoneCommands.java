@@ -259,10 +259,16 @@ final class WarpstoneCommands implements TabExecutor {
                 case "warp_shard_linked":
                     if(args.length==3) item = new ItemStack(WarpItems.getLinkedWarpShard(Warpstone.get(args[2])));
                     break;
+                case "warp_heart":
+                    item = new ItemStack(WarpItems.WARP_HEART);
+                    break;
+                case "charged_warp_shard":
+                    item = WarpItems.getLinkedChargedWarpShard(player.getLocation());
+                    break;
                 default:
                     break;
             }
-            
+
             if(item==null) return Error.INVALID_ARGS.displayActionBar(sender);
 
             player.getInventory().addItem(item);
