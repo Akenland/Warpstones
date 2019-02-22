@@ -50,7 +50,11 @@ public final class WarpstonesPlugin extends JavaPlugin {
 
 		registerCommands();
 
-		if(ConfigValues.warpShardsCraftable) getServer().addRecipe(WarpItems.getWarpShardRecipe());
+		if(ConfigValues.warpShardsCraftable){
+			getServer().addRecipe(WarpItems.getWarpShardRecipe());
+			getServer().addRecipe(WarpItems.getWarpHeartRecipe());
+			getServer().addRecipe(WarpItems.getChargedWarpShardRecipe());
+		}
 	}
 
 	@Override
