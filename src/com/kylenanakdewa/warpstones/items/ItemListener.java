@@ -12,6 +12,7 @@ import com.kylenanakdewa.warpstones.events.WarpstoneActivateEvent;
 import com.kylenanakdewa.warpstones.events.PlayerWarpEvent.WarpCause;
 
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentOffer;
@@ -150,6 +151,11 @@ public final class ItemListener implements Listener {
 
 			// If shard is linked, take the shard and warp the player
 			if(WarpItems.isChargedWarpShardLinked(itemInHand)){
+				Location location = WarpItems.getLinkedChargedShardLocation(itemInHand);
+				if(location==null){
+					Utils.sendActionBar(event.getPlayer(), CommonColors.ERROR+"Invalid destination. Ask an admin for help.");
+				}
+
 				Utils.sendActionBar(event.getPlayer(), "Warping to shard's stored destination...");
 
 				// Take shard, if unbreaking chance is too low
@@ -163,7 +169,7 @@ public final class ItemListener implements Listener {
 				}
 				event.getPlayer().getEquipment().setItemInMainHand(itemInHand);
 
-				new WarpPlayer(event.getPlayer()).teleport(WarpItems.getLinkedChargedShardLocation(itemInHand), false);
+				new WarpPlayer(event.getPlayer()).teleport(location, false);
 				return;
 			}
 		}

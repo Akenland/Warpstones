@@ -1,5 +1,6 @@
 package com.kylenanakdewa.warpstones.items;
 
+import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.warpstones.Warpstone;
 import com.kylenanakdewa.warpstones.WarpstonesPlugin;
 
@@ -183,7 +184,10 @@ public final class WarpItems {
 		// Get the lore text, and strip format codes to get the location
 		String[] coords = ChatColor.stripColor(warpShard.getItemMeta().getLore().get(0)).split(" ");
 		World world = Bukkit.getWorld(coords[0]);
-		if(world==null) return null;
+		if(world==null){
+			Utils.notifyAdminsError("Charged Warp Shard has an invalid world: "+coords[0]);
+			return null;
+		}
 		Location loc = new Location(world, Integer.parseInt(coords[1]), Integer.parseInt(coords[2]), Integer.parseInt(coords[3]));
 		return loc;
 	}
