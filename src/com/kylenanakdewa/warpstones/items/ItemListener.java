@@ -71,7 +71,7 @@ public final class ItemListener implements Listener {
 				// Use warp heart count to determine result amount
 				else if (WarpItems.isWarpHeart(item)) {
 					ItemStack newResult = inv.getResult();
-					newResult.setAmount(WarpItems.getWarpHeartCount(item) / 25);
+					newResult.setAmount(WarpItems.getWarpHeartCount(item) / 10);
 					inv.setResult(newResult);
 				}
 			}
