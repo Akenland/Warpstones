@@ -63,21 +63,22 @@ public final class ItemListener implements Listener {
 		if (inv.getResult() != null && inv.getResult().isSimilar(WarpItems.CHARGED_WARP_SHARD)) {
 			// Make sure item is a warp heart, if not, cancel the crafting
 			for (ItemStack item : inv.getMatrix()) {
-				if (item != null && item.getType().equals(Material.INK_SACK) && !item.isSimilar(WarpItems.WARP_HEART)) {
+				if (item!=null && item.getType().equals(Material.INK_SACK) && !item.isSimilar(WarpItems.WARP_HEART)) {
 					inv.setResult(null);
 					event.setCancelled(true);
+					Utils.notifyAdmins("Attempt to craft Charged Shard failed, invalid ink sack");
 				}
 				// Use warp heart count to determine result amount
 				else if (WarpItems.isWarpHeart(item)) {
 					ItemStack newResult = inv.getResult();
 					newResult.setAmount(WarpItems.getWarpHeartCount(item) / 25);
 					inv.setResult(newResult);
+					Utils.notifyAdmins("Shard count: "+newResult.getAmount());
 				}
 			}
 			// If crafting was not cancelled, add the location
 			if (inv.getResult() != null && !event.isCancelled()) {
-				inv.setResult(
-						WarpItems.getLinkedChargedWarpShard(event.getWhoClicked().getLocation(), inv.getResult()));
+				inv.setResult(WarpItems.getLinkedChargedWarpShard(event.getWhoClicked().getLocation(), inv.getResult()));
 			}
 
 		}
