@@ -143,7 +143,7 @@ public final class WarpItems {
 		ItemStack linkedShard = existingWarpShard;
 
 		// If it's a warp shard, add the warpstone name in the lore, hidden with magic text (&k), and the X and Z co-ords
-		if(isWarpShard(linkedShard)){
+		if(isChargedWarpShard(linkedShard)){
 			String locString = location.getBlockX()+" "+location.getBlockY()+" "+location.getBlockZ();
 			ItemMeta itemMeta = linkedShard.getItemMeta();
 			List<String> loreText = new ArrayList<String>(Arrays.asList(

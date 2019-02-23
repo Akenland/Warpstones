@@ -317,7 +317,7 @@ final class WarpstoneCommands implements TabExecutor {
         // Give command
         if(args.length>=2 && args.length<4 && args[0].equalsIgnoreCase("give")){
             List<String> completions = new ArrayList<String>();
-            completions.addAll(Arrays.asList("warp_dust","warp_shard","warp_shard_linked"));
+            completions.addAll(Arrays.asList("warp_dust","warp_shard","warp_shard_linked","warp_heart","charged_warp_shard"));
 
             return completions;
         }
