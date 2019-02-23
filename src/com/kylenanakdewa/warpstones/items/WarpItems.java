@@ -148,7 +148,7 @@ public final class WarpItems {
 			String locString = location.getBlockX()+" "+location.getBlockY()+" "+location.getBlockZ();
 			ItemMeta itemMeta = linkedShard.getItemMeta();
 			List<String> loreText = new ArrayList<String>(Arrays.asList(
-				ChatColor.BLUE.toString()+ChatColor.MAGIC.toString()+location.getWorld()+" "+locString,
+				ChatColor.BLUE.toString()+ChatColor.MAGIC.toString()+location.getWorld().getName()+" "+locString,
 				ChatColor.GRAY.toString()+locString
 				));
 			itemMeta.setLore(loreText);
