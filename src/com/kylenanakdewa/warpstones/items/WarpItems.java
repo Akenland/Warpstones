@@ -45,7 +45,7 @@ public final class WarpItems {
 
 	// Warp Heart
 	public static ItemStack WARP_HEART = new ItemStack(getRenamedLapis("Warp Heart"));
-	
+
 	// Warp Heart
 	public static ItemStack CHARGED_WARP_SHARD = new ItemStack(getRenamedLapis("Charged Warp Shard"));
 
@@ -105,7 +105,7 @@ public final class WarpItems {
 	//// Warp Hearts
 	// Check if an itemstack is a warp heart
 	public static boolean isWarpHeart(ItemStack item){
-		if(item==null || !item.getType().equals(Material.INK_SACK)) return false;
+		if(item==null || !item.getType().equals(Material.INK_SACK) || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName()) return false;
 		return item.getItemMeta().getDisplayName().equals(ChatColor.BLUE+"Warp Heart");
 	}
 
