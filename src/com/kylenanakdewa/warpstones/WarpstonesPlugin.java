@@ -18,6 +18,7 @@ import java.util.Map;
 import com.kylenanakdewa.core.common.ConfigAccessor;
 import com.kylenanakdewa.warpstones.items.ItemListener;
 import com.kylenanakdewa.warpstones.items.WarpItems;
+import com.kylenanakdewa.warpstones.quicksave.QuickSaveListener;
 import com.kylenanakdewa.warpstones.teleports.TeleportCommands;
 
 /**
@@ -77,6 +78,9 @@ public final class WarpstonesPlugin extends JavaPlugin {
 		// Register recipes (and event listener)
 		if(ConfigValues.warpShardsCraftable) getServer().getPluginManager().registerEvents(new ItemListener(), this);
 
+		// Register quicksave listener
+		getServer().getPluginManager().registerEvents(new QuickSaveListener(), this);
+
 		// Compass task
 		if(ConfigValues.compassesShowDistances) setupCompassTask();
 
@@ -117,13 +121,13 @@ public final class WarpstonesPlugin extends JavaPlugin {
 				if(((player.getInventory().getItemInMainHand()!=null && player.getInventory().getItemInMainHand().getType().equals(Material.COMPASS))
 				 || (player.getInventory().getItemInOffHand()!=null && player.getInventory().getItemInOffHand().getType().equals(Material.COMPASS)))
 				 && player.getScoreboard().equals(Bukkit.getScoreboardManager().getMainScoreboard())){
-	   
+
 				   // Create the scoreboard
 				   Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
 				   Objective obj = board.registerNewObjective("ws_distances", "dummy");
 				   obj.setDisplayName("Distance to");
 				   obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-	   
+
 				   // Add entries
 				   WarpPlayer warpData = new WarpPlayer(player);
 				   Location pLoc = player.getLocation();
@@ -149,7 +153,7 @@ public final class WarpstonesPlugin extends JavaPlugin {
 					   Score spawn = obj.getScore("Spawn");
 					   spawn.setScore((int)spawnStone.getLocation().distance(pLoc));
 				   }
-	   
+
 				   player.setScoreboard(board);
 			   }
 			   else {
