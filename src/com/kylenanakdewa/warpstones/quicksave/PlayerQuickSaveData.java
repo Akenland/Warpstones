@@ -29,18 +29,14 @@ public class PlayerQuickSaveData extends PlayerSaveDataSection {
         // If player is offline, do nothing
         if(!character.isOnline()) return;
 
-        ConfigurationSection itemData = data.getConfigurationSection("quicksave.items");
-        PlayerInventory inv = character.getPlayer().getPlayer().getInventory();
-
-        // Create data section, if it doesn't exist
-        if(itemData==null){
-            itemData = data.createSection("quicksave.items");
-        }
-
         // Clear existing save
-        itemData.set("", null);
+        data.set("quicksave.items", null);
+
+        // Create data section
+        ConfigurationSection itemData = data.createSection("quicksave.items");
 
         // Add all items in the inventory
+        PlayerInventory inv = character.getPlayer().getPlayer().getInventory();
         for(int i=0; i<inv.getSize(); i++){
             itemData.set(""+i, inv.getItem(i).serialize());
         }
