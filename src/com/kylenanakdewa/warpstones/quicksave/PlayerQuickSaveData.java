@@ -32,12 +32,20 @@ public class PlayerQuickSaveData extends PlayerSaveDataSection {
         ConfigurationSection itemData = data.getConfigurationSection("quicksave.items");
         PlayerInventory inv = character.getPlayer().getPlayer().getInventory();
 
+        // Create data section, if it doesn't exist
+        if(itemData==null){
+            itemData = data.createSection("quicksave.items");
+        }
+
         // Clear existing save
         itemData.set("", null);
 
+        // Add all items in the inventory
         for(int i=0; i<inv.getSize(); i++){
             itemData.set(""+i, inv.getItem(i).serialize());
         }
+
+        // Save the data to file
         save();
 
         character.getPlayer().getPlayer().sendMessage(CommonColors.INFO+"Your inventory has been quicksaved.");
