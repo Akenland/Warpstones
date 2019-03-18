@@ -8,6 +8,7 @@ import com.kylenanakdewa.core.common.CommonColors;
 import com.kylenanakdewa.core.common.savedata.PlayerSaveDataSection;
 import com.kylenanakdewa.warpstones.WarpstonesPlugin;
 
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
@@ -38,7 +39,8 @@ public class PlayerQuickSaveData extends PlayerSaveDataSection {
         // Add all items in the inventory
         PlayerInventory inv = character.getPlayer().getPlayer().getInventory();
         for(int i=0; i<inv.getSize(); i++){
-            itemData.set(""+i, inv.getItem(i).serialize());
+            ItemStack item = inv.getItem(i);
+            if(item!=null && !item.getType().equals(Material.AIR)) itemData.set(""+i, item.serialize());
         }
 
         // Save the data to file
