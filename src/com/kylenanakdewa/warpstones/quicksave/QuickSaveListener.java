@@ -3,13 +3,13 @@ package com.kylenanakdewa.warpstones.quicksave;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import com.kylenanakdewa.core.common.CommonColors;
 import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.warpstones.events.WarpstoneActivateEvent;
 
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -37,7 +37,7 @@ public class QuickSaveListener implements Listener {
 
 
     /** The players who should recover their quicksaved items on respawn, and the items they will recover. */
-    private static final Map<Player,List<ItemStack>> playersToRecover = new HashMap<Player,List<ItemStack>>();
+    private static final Map<UUID,List<ItemStack>> playersToRecover = new HashMap<UUID,List<ItemStack>>();
 
     /**
      * Checks if players should recover their quicksaved items on next respawn.
@@ -67,7 +67,7 @@ public class QuickSaveListener implements Listener {
 
             Utils.notifyAdmins(event.getEntity().getDisplayName()+CommonColors.INFO+" will recover "+savedItems.size()+" items, drop "+droppedItems.size()+".");
 
-            playersToRecover.put(event.getEntity(), savedItems);
+            playersToRecover.put(event.getEntity().getUniqueId(), savedItems);
         }
     }
 
@@ -76,11 +76,11 @@ public class QuickSaveListener implements Listener {
      */
     @EventHandler
     public void onRespawn(PlayerRespawnEvent event) {
-        if(playersToRecover.containsKey(event.getPlayer())){
-            List<ItemStack> items = playersToRecover.get(event.getPlayer());
+        if(playersToRecover.containsKey(event.getPlayer().getUniqueId())){
+            List<ItemStack> items = playersToRecover.get(event.getPlayer().getUniqueId());
             Utils.notifyAdmins(event.getPlayer().getDisplayName()+CommonColors.INFO+" recovered "+items.size()+" items.");
             event.getPlayer().getInventory().addItem(items.toArray(new ItemStack[0]));
-            playersToRecover.remove(event.getPlayer());
+            playersToRecover.remove(event.getPlayer().getUniqueId());
         }
     }
 }
