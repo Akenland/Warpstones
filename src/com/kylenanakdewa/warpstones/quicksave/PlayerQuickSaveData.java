@@ -1,6 +1,5 @@
 package com.kylenanakdewa.warpstones.quicksave;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -56,11 +55,11 @@ public class PlayerQuickSaveData extends PlayerSaveDataSection {
      */
     public List<ItemStack> getSavedItems() {
         ConfigurationSection itemData = data.getConfigurationSection("quicksave.items");
-        List<ItemStack> items = new ArrayList<ItemStack>(Arrays.asList(new ItemStack[itemData.getKeys(false).size()]));
+        ItemStack[] items = new ItemStack[41];
         for(String itemKey : itemData.getKeys(false)){
-            items.add(Integer.parseInt(itemKey), itemData.getItemStack(itemKey));
+            items[Integer.parseInt(itemKey)] = itemData.getItemStack(itemKey);
         }
-        return items;
+        return Arrays.asList(items);
     }
 
     /**

@@ -62,9 +62,10 @@ public class QuickSaveListener implements Listener {
 
             List<ItemStack> savedItems = new PlayerQuickSaveData(event.getEntity()).getSavedItems();
             List<ItemStack> droppedItems = event.getDrops();
+            Utils.notifyAdmins(event.getEntity().getDisplayName()+CommonColors.INFO+" has "+savedItems.size()+" saved items, "+droppedItems.size()+" drops.");
+
             savedItems.removeIf(item -> !droppedItems.contains(item));
             droppedItems.removeIf(item -> savedItems.contains(item));
-
             Utils.notifyAdmins(event.getEntity().getDisplayName()+CommonColors.INFO+" will recover "+savedItems.size()+" items, drop "+droppedItems.size()+".");
 
             playersToRecover.put(event.getEntity().getUniqueId(), savedItems);
