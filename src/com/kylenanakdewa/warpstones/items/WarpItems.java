@@ -10,7 +10,6 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -19,17 +18,16 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.Dye;
 
 public final class WarpItems {
 
 	// Getting the renamed lapis item
 	private static ItemStack getRenamedLapis(String name){
 		// Get a blue dye
-		ItemStack item = new ItemStack(Material.INK_SACK, 1, (short) 4);
+		ItemStack item = new ItemStack(Material.LAPIS_LAZULI);
 
 		// Rename it
-		ItemMeta itemMeta = Bukkit.getItemFactory().getItemMeta(Material.INK_SACK);
+		ItemMeta itemMeta = Bukkit.getItemFactory().getItemMeta(Material.LAPIS_LAZULI);
 		itemMeta.setDisplayName(ChatColor.BLUE+name);
 		item.setItemMeta(itemMeta);
 
@@ -76,7 +74,7 @@ public final class WarpItems {
 
 	// Check if an itemstack is a warp shard, linked or not
 	public static boolean isWarpShard(ItemStack item){
-		if(item==null || !item.getType().equals(Material.INK_SACK)) return false;
+		if(item==null || !item.getType().equals(Material.LAPIS_LAZULI)) return false;
 		return item.getItemMeta().getDisplayName().equals(ChatColor.BLUE+"Warp Shard");
 	}
 
@@ -105,7 +103,7 @@ public final class WarpItems {
 	//// Warp Hearts
 	// Check if an itemstack is a warp heart
 	public static boolean isWarpHeart(ItemStack item){
-		if(item==null || !item.getType().equals(Material.INK_SACK) || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName()) return false;
+		if(item==null || !item.getType().equals(Material.LAPIS_LAZULI) || !item.hasItemMeta() || !item.getItemMeta().hasDisplayName()) return false;
 		return item.getItemMeta().getDisplayName().equals(ChatColor.BLUE+"Warp Heart");
 	}
 
@@ -163,7 +161,7 @@ public final class WarpItems {
 
 	// Check if an itemstack is a warp shard, linked or not
 	public static boolean isChargedWarpShard(ItemStack item){
-		if(item==null || !item.getType().equals(Material.INK_SACK)) return false;
+		if(item==null || !item.getType().equals(Material.LAPIS_LAZULI)) return false;
 		return item.getItemMeta().getDisplayName().equals(ChatColor.BLUE+"Charged Warp Shard");
 	}
 
@@ -201,7 +199,7 @@ public final class WarpItems {
 
 		// Set the ingredients to 2x2 warp dust
 		warpShardRecipe.shape("DD","DD");
-		warpShardRecipe.setIngredient('D', new Dye(DyeColor.BLUE));
+		warpShardRecipe.setIngredient('D', Material.LAPIS_LAZULI);
 
 		return warpShardRecipe;
 	}
@@ -213,9 +211,9 @@ public final class WarpItems {
 
 		// Set the ingredients to 2x2 warp dust
 		warpHeartRecipe.shape("DSD","SES","DSD");
-		warpHeartRecipe.setIngredient('D', new Dye(DyeColor.BLUE));
-		warpHeartRecipe.setIngredient('S', new Dye(DyeColor.BLUE));
-		warpHeartRecipe.setIngredient('E', Material.EYE_OF_ENDER);
+		warpHeartRecipe.setIngredient('D', Material.LAPIS_LAZULI);
+		warpHeartRecipe.setIngredient('S', Material.LAPIS_LAZULI);
+		warpHeartRecipe.setIngredient('E', Material.ENDER_EYE);
 
 		return warpHeartRecipe;
 	}
@@ -226,7 +224,7 @@ public final class WarpItems {
 		ShapelessRecipe warpShardRecipe = new ShapelessRecipe(new NamespacedKey(WarpstonesPlugin.plugin, "charged_warp_shard"), CHARGED_WARP_SHARD);
 
 		// Set the ingredients to warp heart + ender pearl
-		warpShardRecipe.addIngredient(new Dye(DyeColor.BLUE));
+		warpShardRecipe.addIngredient(Material.LAPIS_LAZULI);
 		warpShardRecipe.addIngredient(Material.ENDER_PEARL);
 
 		return warpShardRecipe;

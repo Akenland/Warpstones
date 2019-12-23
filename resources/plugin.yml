@@ -1,5 +1,5 @@
 name: Warpstones
-version: 1.2pre
+version: 1.3
 description: A uniquely immersive warping system, based around floating structures known as Warpstones.
 author: Kyle Nanakdewa
 website: http://plugins.akenland.com
@@ -11,7 +11,7 @@ softdepend: [WorldEdit]
 commands:
   warpstones:
     description: Warp to a warpstone
-    aliases: [warpstone, ws, warp, home, last, spawn, sethome]
+    aliases: [ws, warp, home, last, spawn]
   tp:
     description: Teleport to another player
     aliases: [tpa]

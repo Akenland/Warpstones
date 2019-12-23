@@ -103,7 +103,7 @@ public final class WarpstonesPlugin extends JavaPlugin {
 	 */
 	private void setupDynmapMarkers(){
 		if(getServer().getPluginManager().isPluginEnabled("dynmap")){
-			new DynmapWarpstones(this);
+			//new DynmapWarpstones(this);
 			getLogger().info("Adding Warpstone markers to Dynmap!");
 		}
 	}
