@@ -4,6 +4,7 @@ description: A uniquely immersive warping system, based around floating structur
 author: Kyle Nanakdewa
 website: http://plugins.akenland.com
 
+api-version: 1.14
 main: com.kylenanakdewa.warpstones.WarpstonesPlugin
 depend: [CoRE]
 softdepend: [WorldEdit]
