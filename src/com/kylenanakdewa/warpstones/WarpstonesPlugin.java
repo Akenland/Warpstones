@@ -124,8 +124,7 @@ public final class WarpstonesPlugin extends JavaPlugin {
 
 				   // Create the scoreboard
 				   Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
-				   Objective obj = board.registerNewObjective("ws_distances", "dummy");
-				   obj.setDisplayName("Distance to");
+				   Objective obj = board.registerNewObjective("ws_distances", "dummy", "Distance to");
 				   obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 
 				   // Add entries

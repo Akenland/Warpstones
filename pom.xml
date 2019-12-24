@@ -28,8 +28,8 @@
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
     <repository>
-      <id>sk89q-snapshots</id>
-      <url>http://maven.sk89q.com/artifactory/repo/</url>
+      <id>enginehub-maven</id>
+      <url>http://maven.enginehub.org/repo/</url>
     </repository>
     <!--<repository>
       <id>dynmap-repo</id>
@@ -58,13 +58,7 @@
     <dependency>
       <groupId>com.sk89q.worldedit</groupId>
       <artifactId>worldedit-bukkit</artifactId>
-      <version>6.1.4</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.sk89q.worldedit</groupId>
-      <artifactId>worldedit-core</artifactId>
-      <version>6.1.4-SNAPSHOT</version>
+      <version>7.0.1</version>
       <scope>provided</scope>
     </dependency>
 
