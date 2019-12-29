@@ -44,7 +44,7 @@ final class WarpstoneWEGeneration {
             ClipboardHolder clipboardHolder = new ClipboardHolder(schem);
 
             // Randomly rotate the schematic
-            clipboardHolder.setTransform(new AffineTransform().rotateX(Arrays.asList(0, 90, 180, 270).get(ThreadLocalRandom.current().nextInt(3))));
+            clipboardHolder.setTransform(new AffineTransform().rotateY(Arrays.asList(0, 90, 180, 270).get(ThreadLocalRandom.current().nextInt(3))));
 
             Operation operation = clipboardHolder.createPaste(editSession).to(loc).ignoreAirBlocks(true).build();
             Operations.complete(operation);
@@ -57,7 +57,7 @@ final class WarpstoneWEGeneration {
         Pattern groundPattern;
         try {
             // Ground pattern is the block the player is standing on, plus coarse dirt and gravel
-            groundPattern = we.getPatternFactory().parseFromInput("dirt:1,gravel,"+player.getLocation().subtract(0, 1, 0).getBlock().getType().toString(), new ParserContext());
+            groundPattern = we.getPatternFactory().parseFromInput("coarse_dirt,gravel,"+player.getLocation().subtract(0, 1, 0).getBlock().getType().toString(), new ParserContext());
         } catch(InputParseException e){
             player.sendMessage(CommonColors.ERROR+"Invalid block pattern to generate Warpstone: " + e.getLocalizedMessage());
             return 0;
