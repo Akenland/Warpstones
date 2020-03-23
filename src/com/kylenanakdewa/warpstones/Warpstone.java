@@ -17,7 +17,6 @@ import com.kylenanakdewa.core.common.CommonColors;
 import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.core.common.prompts.Prompt;
 import com.kylenanakdewa.core.common.savedata.SaveDataSection;
-import com.kylenanakdewa.warpstones.ConfigValues;
 import com.kylenanakdewa.warpstones.events.WarpstoneActivateEvent;
 import com.kylenanakdewa.warpstones.events.WarpstoneEditEvent;
 
