@@ -105,7 +105,7 @@ final class WarpstoneCommands implements TabExecutor {
         if(args[0].equalsIgnoreCase("version")){
             sender.sendMessage(ConfigValues.color+"Warpstones "+plugin.getDescription().getVersion()+" by Kyle Nanakdewa");
             sender.sendMessage(CommonColors.MESSAGE+"- A uniquely immersive warping system, based around floating structures known as Warpstones.");
-            sender.sendMessage(CommonColors.MESSAGE+"- Website: http://plugins.akenland.com/");
+            sender.sendMessage(CommonColors.MESSAGE+"- Website: https://plugins.akenland.com/");
 			return true;
         }
 
