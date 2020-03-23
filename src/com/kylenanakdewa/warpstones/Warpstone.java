@@ -17,7 +17,6 @@ import com.kylenanakdewa.core.common.CommonColors;
 import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.core.common.prompts.Prompt;
 import com.kylenanakdewa.core.common.savedata.SaveDataSection;
-import com.kylenanakdewa.warpstones.ConfigValues;
 import com.kylenanakdewa.warpstones.events.WarpstoneActivateEvent;
 import com.kylenanakdewa.warpstones.events.WarpstoneEditEvent;
 
@@ -342,7 +341,7 @@ public class Warpstone {
 					design = WarpstoneDesigns.SAND;
 				}
 				// If it's HELL, use Nether style
-				else if(biome.equals(Biome.HELL)){
+				else if(biome.equals(Biome.NETHER)){
 					design = WarpstoneDesigns.HELL;
 				}
 				// All other hot biomes use the mesa style
@@ -353,7 +352,7 @@ public class Warpstone {
 			// Temp 0.1+ - most biomes
 			else if(temperature>0.1){
 				// If it's SKY, use End style
-				if(temperature==0.5 && player.getLocation().getBlock().getBiome().equals(Biome.SKY)){
+				if(temperature==0.5 && player.getLocation().getBlock().getBiome().equals(Biome.THE_END)){
 					design = WarpstoneDesigns.END;
 				}
 				// Most other biomes use the default style
@@ -372,7 +371,7 @@ public class Warpstone {
 		Block cmdBlock = location.getBlock();
 
 		// Set it to a command block
-		cmdBlock.setType(Material.COMMAND);
+		cmdBlock.setType(Material.COMMAND_BLOCK);
 
 		// Set the command
 		BlockState cmdBlockState = cmdBlock.getState();
@@ -381,7 +380,7 @@ public class Warpstone {
 
 		// Place a pressure plate above
 		Block plate = location.add(0, 2, 0).getBlock();
-		plate.setType(Material.STONE_PLATE);
+		plate.setType(Material.STONE_PRESSURE_PLATE);
 	}
 
 

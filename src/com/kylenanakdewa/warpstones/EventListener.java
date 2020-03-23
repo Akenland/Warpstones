@@ -26,14 +26,14 @@ import com.kylenanakdewa.core.common.prompts.PromptActionEvent;
 import com.kylenanakdewa.warpstones.events.PlayerWarpEvent.WarpCause;
 
 public final class EventListener implements Listener {
-	
+
 
 	//// Track player movement for teleport delays
 	static HashMap<UUID, Boolean> hasPlayerMoved = new HashMap<UUID, Boolean>();
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event){
 		Player player = event.getPlayer();
-		
+
 		// If player is teleporting, check if they've moved
 		if(hasPlayerMoved.containsKey(player.getUniqueId()) && !hasPlayerMoved.get(player.getUniqueId())){
 			// If they moved more than 0.5 in X or Z axis, set the hashmap value to true
@@ -44,22 +44,22 @@ public final class EventListener implements Listener {
 			}
 		}
 	}
-	
-	
+
+
 	//// Set command blocks for warpstone when player steps on them
 	static int timesSetCmd;
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event){
 		// If this is a pressure plate, check if they're setting a command block
-		if(event.getAction() == Action.PHYSICAL && event.getClickedBlock().getType() == Material.STONE_PLATE){
+		if(event.getAction() == Action.PHYSICAL && event.getClickedBlock().getType() == Material.STONE_PRESSURE_PLATE){
 			Player player = event.getPlayer();
 			if(WarpUtils.warpstoneCmdSet.containsKey(player.getName())){
 				String warpName = WarpUtils.warpstoneCmdSet.get(player.getName());
 				// Check that the player is actually on the plate
-				if(player.getLocation().getBlock().getType() == Material.STONE_PLATE){
+				if(player.getLocation().getBlock().getType() == Material.STONE_PRESSURE_PLATE){
 					// Set the command block
 					Block cmdBlock = player.getLocation().subtract(0, 2, 0).getBlock();
-					cmdBlock.setType(Material.COMMAND);
+					cmdBlock.setType(Material.COMMAND_BLOCK);
 					BlockState cmdBlockState = cmdBlock.getState();
 
 					// Delay
@@ -115,7 +115,7 @@ public final class EventListener implements Listener {
 
 		Location loc = event.getEntity().getLocation();
 		String locString = loc.getBlockX()+" "+loc.getBlockY()+" "+loc.getBlockZ();
-		
+
 		Warpstone nearestWarp = Warpstone.getNearest(loc, 100, false);
 		String nearestWarpString = "";
 		if(nearestWarp!=null){

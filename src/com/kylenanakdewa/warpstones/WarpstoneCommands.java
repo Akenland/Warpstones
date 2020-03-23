@@ -56,15 +56,15 @@ final class WarpstoneCommands implements TabExecutor {
             // Make sure sender has access to warp options
             if(!sender.hasPermission("warpstones.last") && !sender.hasPermission("warpstones.home") && !sender.hasPermission("warpstones.spawn"))
                 return Error.NO_PERMISSION.displayChat(sender);
-            
+
             // Show prompt with available warpstones commands
             Prompt prompt = new Prompt();
             prompt.addQuestion(CommonColors.INFO+"--- "+ConfigValues.color+"Warpstones"+CommonColors.INFO+" ---");
-            
+
             if(sender.hasPermission("warpstones.last")) prompt.addAnswer("Warp to last warpstone", "command_warp last");
             if(sender.hasPermission("warpstones.home")) prompt.addAnswer("Warp home", "command_warp home");
             if(sender.hasPermission("warpstones.spawn")) prompt.addAnswer("Warp to spawn", "command_warp spawn");
-            
+
             prompt.display(sender);
             return true;
         }
@@ -105,7 +105,7 @@ final class WarpstoneCommands implements TabExecutor {
         if(args[0].equalsIgnoreCase("version")){
             sender.sendMessage(ConfigValues.color+"Warpstones "+plugin.getDescription().getVersion()+" by Kyle Nanakdewa");
             sender.sendMessage(CommonColors.MESSAGE+"- A uniquely immersive warping system, based around floating structures known as Warpstones.");
-            sender.sendMessage(CommonColors.MESSAGE+"- Website: http://plugins.akenland.com/");
+            sender.sendMessage(CommonColors.MESSAGE+"- Website: https://plugins.akenland.com/");
 			return true;
         }
 
@@ -120,7 +120,7 @@ final class WarpstoneCommands implements TabExecutor {
         // To command (warping directly to any warpstone)
         if(args.length>=2 && args[0].equalsIgnoreCase("to")){
             if(sender.hasPermission("warpstones.to."+args[1].toLowerCase()) || sender.hasPermission("warpstones.to.*")){
-                
+
                 // Figure out who should be warped
                 Player targetPlayer = null;
                 if(args.length==3 && sender.hasPermission("warpstones.warpothers")) targetPlayer = Utils.getPlayer(args[2]);
@@ -175,10 +175,10 @@ final class WarpstoneCommands implements TabExecutor {
             if(args.length==2){
                 Prompt prompt = new Prompt();
                 prompt.addQuestion("Stand at the center of where the warpstone should be, and choose an option:");
-                prompt.addAnswer("Small (up to 5x7x5)", "command_warpstone generate "+args[1]+" 1");
-                prompt.addAnswer("Medium (up to 7x9x7)", "command_warpstone generate "+args[1]+" 2");
-                prompt.addAnswer("Large (up to 9x12x9)", "command_warpstone generate "+args[1]+" 3");
-                prompt.addAnswer("Generate command blocks only", "command_warpstone setcmd "+args[1]);
+                prompt.addAnswer("Small (up to 5x7x5)", "command_warpstones generate "+args[1]+" 1");
+                prompt.addAnswer("Medium (up to 7x9x7)", "command_warpstones generate "+args[1]+" 2");
+                prompt.addAnswer("Large (up to 9x12x9)", "command_warpstones generate "+args[1]+" 3");
+                prompt.addAnswer("Generate command blocks only", "command_warpstones setcmd "+args[1]);
 
                 prompt.display(sender);
                 return true;
@@ -292,7 +292,7 @@ final class WarpstoneCommands implements TabExecutor {
 
 		return Error.INVALID_ARGS.displayActionBar(sender);
     }
-    
+
     // Convienience method to get a target player
     private static Player getTargetPlayer(CommandSender sender, String[] args){
         if(args.length==2 && sender.hasPermission("warpstones.warpothers")){
@@ -313,7 +313,7 @@ final class WarpstoneCommands implements TabExecutor {
 
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-	
+
         // Give command
         if(args.length>=2 && args.length<4 && args[0].equalsIgnoreCase("give")){
             List<String> completions = new ArrayList<String>();
@@ -340,7 +340,7 @@ final class WarpstoneCommands implements TabExecutor {
             return completions;
         }
 
-        
+
         return null;
     }
 

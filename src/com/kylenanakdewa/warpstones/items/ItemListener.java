@@ -51,7 +51,7 @@ public final class ItemListener implements Listener {
 					|| (inv.getMatrix()[1] != null && !inv.getMatrix()[1].isSimilar(WarpItems.WARP_SHARD))
 					|| (inv.getMatrix()[2] != null && !inv.getMatrix()[2].isSimilar(WarpItems.WARP_DUST))
 					|| (inv.getMatrix()[3] != null && !inv.getMatrix()[3].isSimilar(WarpItems.WARP_SHARD))
-					|| (inv.getMatrix()[4] != null && !inv.getMatrix()[4].getType().equals(Material.EYE_OF_ENDER))
+					|| (inv.getMatrix()[4] != null && !inv.getMatrix()[4].getType().equals(Material.ENDER_EYE))
 					|| (inv.getMatrix()[5] != null && !inv.getMatrix()[5].isSimilar(WarpItems.WARP_SHARD))
 					|| (inv.getMatrix()[6] != null && !inv.getMatrix()[6].isSimilar(WarpItems.WARP_DUST))
 					|| (inv.getMatrix()[7] != null && !inv.getMatrix()[7].isSimilar(WarpItems.WARP_SHARD))
@@ -64,7 +64,7 @@ public final class ItemListener implements Listener {
 		if (inv.getResult() != null && WarpItems.isChargedWarpShard(inv.getResult())) {
 			// Make sure item is a warp heart, if not, cancel the crafting
 			for (ItemStack item : inv.getMatrix()) {
-				if (item!=null && item.getType().equals(Material.INK_SACK) && !WarpItems.isWarpHeart(item)) {
+				if (item!=null && item.getType().equals(Material.LAPIS_LAZULI) && !WarpItems.isWarpHeart(item)) {
 					inv.setResult(null);
 					event.setCancelled(true);
 				}
@@ -181,7 +181,7 @@ public final class ItemListener implements Listener {
 			event.getPlayer().getInventory().addItem(dust);
 
 			// Increment warp heart, if they have any
-			for(Entry<Integer,? extends ItemStack> item : event.getPlayer().getInventory().all(Material.INK_SACK).entrySet()){
+			for(Entry<Integer,? extends ItemStack> item : event.getPlayer().getInventory().all(Material.LAPIS_LAZULI).entrySet()){
 				if(WarpItems.isWarpHeart(item.getValue())){
 					event.getPlayer().getInventory().setItem(item.getKey(), WarpItems.incrementWarpHeartCounter(item.getValue()));
 				}
@@ -192,7 +192,7 @@ public final class ItemListener implements Listener {
 	@EventHandler
 	public void onLapisOreBreak(BlockBreakEvent event){
 		// If player is breaking lapis ore, event drops items, item used does not have silk touch, and player not in creative
-		if(event.getBlock().getType().equals(Material.LAPIS_ORE) && event.isDropItems() && !event.getPlayer().getEquipment().getItemInMainHand().containsEnchantment(Enchantment.SILK_TOUCH) && !event.getPlayer().getGameMode().equals(GameMode.CREATIVE)){
+		if(!event.isCancelled() && event.getBlock().getType().equals(Material.LAPIS_ORE) && event.isDropItems() && !event.getPlayer().getEquipment().getItemInMainHand().containsEnchantment(Enchantment.SILK_TOUCH) && !event.getPlayer().getGameMode().equals(GameMode.CREATIVE)){
 			ItemStack dust = getRandomWarpDust();
 			dust.setAmount(dust.getAmount()*2);
 

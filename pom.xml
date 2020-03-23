@@ -6,7 +6,7 @@
 
   <groupId>com.kylenanakdewa</groupId>
   <artifactId>Warpstones</artifactId>
-  <version>1.0</version>
+  <version>1.3</version>
 
   <build>
     <sourceDirectory>${basedir}/src</sourceDirectory>
@@ -28,13 +28,13 @@
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
     <repository>
-      <id>sk89q-snapshots</id>
-      <url>http://maven.sk89q.com/artifactory/repo/</url>
+      <id>enginehub-maven</id>
+      <url>http://maven.enginehub.org/repo/</url>
     </repository>
-    <repository>
+    <!--<repository>
       <id>dynmap-repo</id>
       <url>http://repo.mikeprimm.com/</url>
-    </repository>
+    </repository>-->
   </repositories>
 
   <dependencies>
@@ -42,11 +42,11 @@
     <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot-api</artifactId>
-      <version>1.12.2-R0.1-SNAPSHOT</version>
+      <version>1.14.4-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
 
-    <!--RealmsCore-->
+    <!--CoRE-->
     <dependency>
       <groupId>com.kylenanakdewa</groupId>
       <artifactId>CoRE</artifactId>
@@ -58,22 +58,16 @@
     <dependency>
       <groupId>com.sk89q.worldedit</groupId>
       <artifactId>worldedit-bukkit</artifactId>
-      <version>6.1.4</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.sk89q.worldedit</groupId>
-      <artifactId>worldedit-core</artifactId>
-      <version>6.1.4-SNAPSHOT</version>
+      <version>7.0.1</version>
       <scope>provided</scope>
     </dependency>
 
     <!--Dynmap API-->
-    <dependency>
+    <!--<dependency>
       <groupId>us.dynmap</groupId>
       <artifactId>dynmap-api</artifactId>
       <version>2.6-SNAPSHOT</version>
       <scope>provided</scope>
-    </dependency>
+    </dependency>-->
   </dependencies>
 </project>

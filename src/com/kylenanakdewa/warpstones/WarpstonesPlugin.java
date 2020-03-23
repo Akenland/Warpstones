@@ -103,7 +103,7 @@ public final class WarpstonesPlugin extends JavaPlugin {
 	 */
 	private void setupDynmapMarkers(){
 		if(getServer().getPluginManager().isPluginEnabled("dynmap")){
-			new DynmapWarpstones(this);
+			//new DynmapWarpstones(this);
 			getLogger().info("Adding Warpstone markers to Dynmap!");
 		}
 	}
@@ -124,8 +124,7 @@ public final class WarpstonesPlugin extends JavaPlugin {
 
 				   // Create the scoreboard
 				   Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
-				   Objective obj = board.registerNewObjective("ws_distances", "dummy");
-				   obj.setDisplayName("Distance to");
+				   Objective obj = board.registerNewObjective("ws_distances", "dummy", "Distance to");
 				   obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 
 				   // Add entries
