@@ -42,7 +42,7 @@ public class WarpPlayer extends PlayerSaveDataSection {
 		int delayLength = 0;
 		if(delay && !player.hasPermission("warpstones.tp.instant")){
 			// If player health is at or above the threshold (default 20 health), reduced delay (default 2s), otherwise full delay (default 5s)
-			delayLength = (player.getHealth() >= ConfigValues.tpReducedDelayHealth) ? ConfigValues.tpReducedDelay : ConfigValues.tpFullDelay;
+			delayLength = (player.getHealth() >= WarpstonesConfig.tpReducedDelayHealth) ? WarpstonesConfig.tpReducedDelay : WarpstonesConfig.tpFullDelay;
 		}
 
 		// Start monitoring player's movement
@@ -141,7 +141,7 @@ public class WarpPlayer extends PlayerSaveDataSection {
 
 		// If home warp does not exist, send them to spawn, otherwise send them home
 		if(home == null){
-			player.sendMessage(CommonColors.MESSAGE+"You haven't yet chosen a home warpstone with "+ConfigValues.color+"/sethome"+CommonColors.MESSAGE+". Warping to spawn instead.");
+			player.sendMessage(CommonColors.MESSAGE+"You haven't yet chosen a home warpstone with "+WarpstonesConfig.color+"/sethome"+CommonColors.MESSAGE+". Warping to spawn instead.");
 			return warpSpawn(delay, cause);
 		}
 

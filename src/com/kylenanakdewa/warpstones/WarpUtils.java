@@ -12,29 +12,29 @@ import org.bukkit.command.CommandSender;
 import com.kylenanakdewa.core.common.Utils;
 
 final class WarpUtils {
-	
+
 	// List of players setting home warps
 	static final HashSet<String> playersSettingHome = new HashSet<String>();
-	
+
 	// HashMap for players setting warpstone command blocks
 	static final HashMap<String, String> warpstoneCmdSet = new HashMap<String, String>();
-    
-    
+
+
 	// Display warping particles
 	static void displayWarpParticles(Location location){
-		location.getWorld().spawnParticle(Particle.PORTAL, location.getX(), location.getY()+1.5, location.getZ(), ConfigValues.tpParticleCount, 0.5, 0.5, 0.5, 0.5);
+		location.getWorld().spawnParticle(Particle.PORTAL, location.getX(), location.getY()+1.5, location.getZ(), WarpstonesConfig.tpParticleCount, 0.5, 0.5, 0.5, 0.5);
 	}
 	// Play warping sound to player
 	static void playWarpSound(Location location){
-		location.getWorld().playSound(location, Sound.BLOCK_PORTAL_TRAVEL, SoundCategory.AMBIENT, ConfigValues.tpSoundVolume, 2);
+		location.getWorld().playSound(location, Sound.BLOCK_PORTAL_TRAVEL, SoundCategory.AMBIENT, WarpstonesConfig.tpSoundVolume, 2);
 	}
 	// Play teleportation effects (sound and particles)
 	static void playTPEffects(Location location){
 		displayWarpParticles(location);
 		playWarpSound(location);
 	}
-	
-	
+
+
 	// Construct vanilla TP command from args
 	@Deprecated
 	static boolean sendVanillaTP(CommandSender sender, String[] args){

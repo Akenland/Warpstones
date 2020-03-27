@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import com.kylenanakdewa.core.common.CommonColors;
 import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.core.common.prompts.Prompt;
-import com.kylenanakdewa.warpstones.ConfigValues;
+import com.kylenanakdewa.warpstones.WarpstonesConfig;
 import com.kylenanakdewa.warpstones.WarpPlayer;
 
 // Represents a teleport initiated by /tp <destPlayer>
@@ -59,11 +59,11 @@ class TeleportRequest {
         }
 
         Utils.sendActionBar(sendingPlayer, CommonColors.MESSAGE+"Waiting for "+receivingPlayer.getDisplayName()+CommonColors.MESSAGE+" to confirm teleport");
-        
+
         // Prompt the receiving player to confirm teleport
         Prompt prompt = new Prompt();
         prompt.addQuestion(sendingPlayer.getDisplayName()+CommonColors.INFO+" wants to teleport to you.");
-        prompt.addAnswer("Click here or type "+ConfigValues.color+"/tphere"+CommonColors.MESSAGE+" to confirm", "command_tphere");
+        prompt.addAnswer("Click here or type "+WarpstonesConfig.color+"/tphere"+CommonColors.MESSAGE+" to confirm", "command_tphere");
         prompt.display(receivingPlayer);
 
         // Save the request
@@ -76,7 +76,7 @@ class TeleportRequest {
         // Check distance
         if(checkDistance
         && !sendingPlayer.hasPermission("warpstones.tp.nolimits")
-        && (!sendingPlayer.getWorld().equals(receivingPlayer.getWorld()) || (sendingPlayer.getLocation().distanceSquared(receivingPlayer.getLocation()) > ConfigValues.tpDistance))){
+        && (!sendingPlayer.getWorld().equals(receivingPlayer.getWorld()) || (sendingPlayer.getLocation().distanceSquared(receivingPlayer.getLocation()) > WarpstonesConfig.tpDistance))){
             Utils.sendActionBar(sendingPlayer, CommonColors.ERROR+"You are too far away to teleport");
             Utils.sendActionBar(receivingPlayer, sendingPlayer.getDisplayName()+CommonColors.ERROR+" is too far away to teleport");
             return false;

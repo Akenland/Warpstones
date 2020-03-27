@@ -1,6 +1,7 @@
 package com.kylenanakdewa.warpstones;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -57,7 +58,7 @@ public class Warpstone {
 	 * @return the spawn warpstone, or null if it does not exist
 	 */
 	public static Warpstone getSpawn(){
-		return Warpstone.get(ConfigValues.warpstoneSpawn);
+		return Warpstone.get(WarpstonesConfig.warpstoneSpawn);
 	}
 	/**
 	 * Gets the warpstone nearest the specified location.
@@ -330,7 +331,7 @@ public class Warpstone {
 			return;
 		}
 		WarpstoneDesigns design = WarpstoneDesigns.DEFAULT;
-		if(ConfigValues.generateBiomeWarpstones){
+		if(WarpstonesConfig.generateBiomeWarpstones){
 			// Figure out which warpstone design, based on temperature
 			double temperature = getLocation().getBlock().getTemperature();
 			// Temp 2.0+ - desert, mesa
@@ -421,11 +422,11 @@ public class Warpstone {
 
 			// If this is spawn warpstone, don't set it as home
 			if(this.equals(Warpstone.getSpawn())){
-				player.sendMessage(CommonColors.MESSAGE+"This is the spawn warpstone, you cannot set it as your home warpstone. Return here with "+ConfigValues.color+"/spawn");
+				player.sendMessage(CommonColors.MESSAGE+"This is the spawn warpstone, you cannot set it as your home warpstone. Return here with "+ChatColor.BLUE+"/spawn");
 				return;
 			}
 
-			player.sendMessage(CommonColors.MESSAGE+"Home warpstone saved. Return here with "+ConfigValues.color+"/home");
+			player.sendMessage(CommonColors.MESSAGE+"Home warpstone saved. Return here with "+ChatColor.BLUE+"/home");
 			warpPlayer.setHome(this);
 			return;
 		}
@@ -437,7 +438,7 @@ public class Warpstone {
 
 		// If this is player's home warpstone, send them to their last
 		if(warpPlayer.getHome()!=null && this.identifier.equals(warpPlayer.getHome().getName())){
-			prompt.addQuestion("This is your home warpstone. Return here with "+ConfigValues.color+"/home");
+			prompt.addQuestion("This is your home warpstone. Return here with "+ChatColor.BLUE+"/home");
 			questionSet = true;
 		} else {
 			prompt.addAnswer("Warp home", "warp_home");
@@ -445,7 +446,7 @@ public class Warpstone {
 
 		// If this is spawn warpstone
 		if(this.equals(Warpstone.getSpawn())){
-			prompt.addQuestion("This is the spawn warpstone. Return here with "+ConfigValues.color+"/spawn");
+			prompt.addQuestion("This is the spawn warpstone. Return here with "+ChatColor.BLUE+"/spawn");
 			prompt.addQuestion(CommonColors.MESSAGE+"Warpstones allow you to fast travel to previously visited locations.");
 			questionSet = true;
 		} else {
@@ -454,14 +455,14 @@ public class Warpstone {
 
 		// If this is neither (last warpstone)
 		if(!questionSet){
-			prompt.addQuestion("Location saved. Return here with "+ConfigValues.color+"/warp last");
+			prompt.addQuestion("Location saved. Return here with "+ChatColor.BLUE+"/warp last");
 			warpPlayer.setLast(this);
 		} else {
 			prompt.addAnswer("Warp to last warpstone", "warp_last");
 		}
 
 		prompt.display(player);
-		if(getDisplayName()!=null) player.sendTitle("", ConfigValues.color+getDisplayName(), -1, -1, -1);
+		if(getDisplayName()!=null) player.sendTitle("", ChatColor.BLUE+getDisplayName(), -1, -1, -1);
 	}
 
 

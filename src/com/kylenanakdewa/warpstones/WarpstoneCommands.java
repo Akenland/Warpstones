@@ -17,7 +17,10 @@ import com.kylenanakdewa.core.common.Error;
 import com.kylenanakdewa.core.common.Utils;
 import com.kylenanakdewa.core.common.prompts.Prompt;
 import com.kylenanakdewa.warpstones.events.PlayerWarpEvent.WarpCause;
-import com.kylenanakdewa.warpstones.items.WarpItems;
+import com.kylenanakdewa.warpstones.items.dust.WarpDust;
+import com.kylenanakdewa.warpstones.items.heart.WarpHeart;
+import com.kylenanakdewa.warpstones.items.shards.WarpShard;
+import com.kylenanakdewa.warpstones.items.shards.charged.ChargedWarpShard;
 
 /**
  * Command handler for the Warpstones plugin.
@@ -59,7 +62,7 @@ final class WarpstoneCommands implements TabExecutor {
 
             // Show prompt with available warpstones commands
             Prompt prompt = new Prompt();
-            prompt.addQuestion(CommonColors.INFO+"--- "+ConfigValues.color+"Warpstones"+CommonColors.INFO+" ---");
+            prompt.addQuestion(CommonColors.INFO+"--- "+ChatColor.BLUE+"Warpstones"+CommonColors.INFO+" ---");
 
             if(sender.hasPermission("warpstones.last")) prompt.addAnswer("Warp to last warpstone", "command_warp last");
             if(sender.hasPermission("warpstones.home")) prompt.addAnswer("Warp home", "command_warp home");
@@ -103,7 +106,7 @@ final class WarpstoneCommands implements TabExecutor {
 
         // Version command
         if(args[0].equalsIgnoreCase("version")){
-            sender.sendMessage(ConfigValues.color+"Warpstones "+plugin.getDescription().getVersion()+" by Kyle Nanakdewa");
+            sender.sendMessage(ChatColor.BLUE+"Warpstones "+plugin.getDescription().getVersion()+" by Kyle Nanakdewa");
             sender.sendMessage(CommonColors.MESSAGE+"- A uniquely immersive warping system, based around floating structures known as Warpstones.");
             sender.sendMessage(CommonColors.MESSAGE+"- Website: https://plugins.akenland.com/");
 			return true;
@@ -251,19 +254,25 @@ final class WarpstoneCommands implements TabExecutor {
             ItemStack item = null;
             switch(args[1]){
                 case "warp_dust":
-                    item = new ItemStack(WarpItems.WARP_DUST);
+                    item = new WarpDust().getNewItem();
                     break;
                 case "warp_shard":
-                    item = new ItemStack(WarpItems.WARP_SHARD);
+                    item = new WarpShard().getNewItem();
                     break;
                 case "warp_shard_linked":
-                    if(args.length==3) item = new ItemStack(WarpItems.getLinkedWarpShard(Warpstone.get(args[2])));
+                    if(args.length==3){
+                        WarpShard shard = new WarpShard();
+                        item = shard.getNewItem();
+                        item = shard.link(item, Warpstone.get(args[2]));
+                    }
                     break;
                 case "warp_heart":
-                    item = new ItemStack(WarpItems.WARP_HEART);
+                    item = new WarpHeart().getNewItem();
                     break;
                 case "charged_warp_shard":
-                    item = WarpItems.getLinkedChargedWarpShard(player.getLocation());
+                    ChargedWarpShard shard = new ChargedWarpShard();
+                    item = shard.getNewItem();
+                    item = shard.link(item, player.getLocation());
                     break;
                 default:
                     break;
