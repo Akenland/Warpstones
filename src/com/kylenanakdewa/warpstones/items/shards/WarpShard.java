@@ -3,9 +3,10 @@ package com.kylenanakdewa.warpstones.items.shards;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.kylenanakdewa.warpstones.Warpstone;
 import com.kylenanakdewa.warpstones.items.LapisItem;
 import com.kylenanakdewa.warpstones.items.dust.WarpDust;
+import com.kylenanakdewa.warpstones.warpstone.Warpstone;
+import com.kylenanakdewa.warpstones.warpstone.WarpstoneManager;
 
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
@@ -102,7 +103,7 @@ public class WarpShard extends LapisItem {
      */
     public Warpstone getLinkedWarpstone(ItemStack item) {
         String target = getLinked(item);
-        return Warpstone.get(target);
+        return WarpstoneManager.get().getWarpstone(target);
     }
 
     /**

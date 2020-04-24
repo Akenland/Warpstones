@@ -2,7 +2,7 @@ package com.kylenanakdewa.warpstones.items.shards.charged.events;
 
 import java.util.Random;
 
-import com.kylenanakdewa.warpstones.events.WarpstoneActivateEvent;
+import com.kylenanakdewa.warpstones.warpstone.events.WarpstoneActivateEvent;
 
 import org.bukkit.Location;
 import org.bukkit.enchantments.Enchantment;

@@ -1,7 +1,7 @@
 package com.kylenanakdewa.warpstones.items.shards.events;
 
-import com.kylenanakdewa.warpstones.Warpstone;
 import com.kylenanakdewa.warpstones.items.shards.WarpShard;
+import com.kylenanakdewa.warpstones.warpstone.Warpstone;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerEvent;

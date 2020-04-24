@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Set;
 
 import com.kylenanakdewa.core.common.Utils;
-import com.kylenanakdewa.warpstones.Warpstone;
 import com.kylenanakdewa.warpstones.items.heart.WarpHeart;
 import com.kylenanakdewa.warpstones.items.shards.WarpShard;
+import com.kylenanakdewa.warpstones.warpstone.Warpstone;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

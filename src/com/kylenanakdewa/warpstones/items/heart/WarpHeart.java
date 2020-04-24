@@ -2,6 +2,7 @@ package com.kylenanakdewa.warpstones.items.heart;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.kylenanakdewa.warpstones.items.LapisItem;
 import com.kylenanakdewa.warpstones.items.dust.WarpDust;
@@ -99,7 +100,7 @@ public class WarpHeart extends LapisItem {
      * will be thrown.
      */
     public ItemStack setChargeLevel(ItemStack item, int chargeLevel) {
-        if(chargeLevel<1 || chargeLevel>100){
+        if (chargeLevel < 1 || chargeLevel > 100) {
             throw new IllegalArgumentException("Warp Heart charge level must be between 0-100");
         }
 
@@ -129,7 +130,13 @@ public class WarpHeart extends LapisItem {
         int chargeLevel = getChargeLevel(item);
 
         if (chargeLevel >= 0) {
-            chargeLevel++;
+            // Random increment
+            chargeLevel += new Random().nextInt(5) + 1;
+
+            // Cap charge level at 100
+            chargeLevel = Math.min(chargeLevel, 100);
+
+            // Update the item
             item = setChargeLevel(item, chargeLevel);
         }
 

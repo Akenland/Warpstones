@@ -2,8 +2,8 @@ package com.kylenanakdewa.warpstones.items.shards.events;
 
 import java.util.Random;
 
-import com.kylenanakdewa.warpstones.Warpstone;
-import com.kylenanakdewa.warpstones.events.WarpstoneActivateEvent;
+import com.kylenanakdewa.warpstones.warpstone.Warpstone;
+import com.kylenanakdewa.warpstones.warpstone.events.WarpstoneActivateEvent;
 
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.Cancellable;

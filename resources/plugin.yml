@@ -11,11 +11,11 @@ softdepend: [WorldEdit]
 
 commands:
   warpstones:
-    description: Manage warpstones
+    description: Manage Warpstones
     aliases: [ws]
   warp:
-    description: Warp to a warpstone
-    usage: "Usage: /warp <warpstone ID>"
+    description: Warp to a Warpstone
+    usage: "Usage: /warp <Warpstone ID>"
   home:
     description: Warp to your home bed
   spawn:

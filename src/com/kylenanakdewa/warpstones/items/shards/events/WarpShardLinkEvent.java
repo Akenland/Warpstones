@@ -1,7 +1,7 @@
 package com.kylenanakdewa.warpstones.items.shards.events;
 
-import com.kylenanakdewa.warpstones.Warpstone;
-import com.kylenanakdewa.warpstones.events.WarpstoneActivateEvent;
+import com.kylenanakdewa.warpstones.warpstone.Warpstone;
+import com.kylenanakdewa.warpstones.warpstone.events.WarpstoneActivateEvent;
 
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;

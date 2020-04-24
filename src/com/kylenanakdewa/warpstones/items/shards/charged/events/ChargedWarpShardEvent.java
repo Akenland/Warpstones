@@ -1,6 +1,5 @@
 package com.kylenanakdewa.warpstones.items.shards.charged.events;
 
-import com.kylenanakdewa.warpstones.Warpstone;
 import com.kylenanakdewa.warpstones.items.shards.charged.ChargedWarpShard;
 
 import org.bukkit.Location;

@@ -2,10 +2,10 @@ package com.kylenanakdewa.warpstones.items.shards.charged;
 
 import com.kylenanakdewa.core.common.CommonColors;
 import com.kylenanakdewa.core.common.Utils;
-import com.kylenanakdewa.warpstones.WarpPlayer;
-import com.kylenanakdewa.warpstones.events.WarpstoneActivateEvent;
+import com.kylenanakdewa.warpstones.WarpstonesPlayerData;
 import com.kylenanakdewa.warpstones.items.dust.WarpDust;
 import com.kylenanakdewa.warpstones.items.shards.charged.events.ChargedWarpShardUseEvent;
+import com.kylenanakdewa.warpstones.warpstone.events.WarpstoneActivateEvent;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -65,7 +65,7 @@ public class ChargedWarpShardListener implements Listener {
         if (!event.isCancelled()) {
             Utils.sendActionBar(event.getPlayer(), ChatColor.BLUE + "Warping to shard's stored destination...");
 
-            new WarpPlayer(event.getPlayer()).teleport(event.getDestinationLocation(), false);
+            new WarpstonesPlayerData(event.getPlayer()).teleport(event.getDestinationLocation(), false);
 
             // Consume the Warp Shard
             if (event.willConsumeShard()) {

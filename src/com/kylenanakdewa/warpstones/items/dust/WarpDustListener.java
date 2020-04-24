@@ -1,6 +1,6 @@
 package com.kylenanakdewa.warpstones.items.dust;
 
-import com.kylenanakdewa.warpstones.events.WarpstoneActivateEvent;
+import com.kylenanakdewa.warpstones.warpstone.events.WarpstoneActivateEvent;
 
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -21,7 +21,7 @@ public class WarpDustListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onWarpstoneActivate(WarpstoneActivateEvent event) {
-        if (!event.isCancelled() && !event.isLastWarpstone() && !event.isHomeWarpstone() && !event.isSpawnWarpstone()) {
+        if (!event.isCancelled() && !event.isMostRecentWarpstone() && !event.isSpawnWarpstone()) {
             ItemStack dust = new WarpDust().getRandomWarpDust(40, 8);
 
             // Make sure air isn't dropped

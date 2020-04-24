@@ -1,6 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -31,13 +30,10 @@
       <id>enginehub-maven</id>
       <url>http://maven.enginehub.org/repo/</url>
     </repository>
-    <!--<repository>
-      <id>dynmap-repo</id>
-      <url>http://repo.mikeprimm.com/</url>
-    </repository>-->
   </repositories>
 
   <dependencies>
+
     <!--Spigot API-->
     <dependency>
       <groupId>org.spigotmc</groupId>
@@ -62,12 +58,5 @@
       <scope>provided</scope>
     </dependency>
 
-    <!--Dynmap API-->
-    <!--<dependency>
-      <groupId>us.dynmap</groupId>
-      <artifactId>dynmap-api</artifactId>
-      <version>2.6-SNAPSHOT</version>
-      <scope>provided</scope>
-    </dependency>-->
   </dependencies>
 </project>
