@@ -6,15 +6,19 @@ import java.util.Map;
 import com.kylenanakdewa.warpstones.warpstone.Warpstone;
 import com.kylenanakdewa.warpstones.warpstone.WarpstoneManager;
 import com.kylenanakdewa.warpstones.warpstone.events.WarpstoneApproachEvent;
+import com.kylenanakdewa.warpstones.warpstone.events.WarpstoneInteractEvent;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.EquipmentSlot;
 
 /**
- * Tracks when players approach Warpstones.
+ * Tracks when players approach or interact with Warpstones.
  *
  * @author Kyle Nanakdewa
  */
@@ -73,6 +77,28 @@ public class WarpstoneApproachListener implements Listener {
                 clearApproachedWarpstone(event.getPlayer());
             }
 
+        }
+    }
+
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        // Make sure event involves right-clicking a block with main hand
+        if (!event.hasBlock() || !event.getAction().equals(Action.RIGHT_CLICK_BLOCK)
+                || !event.getHand().equals(EquipmentSlot.HAND)) {
+            return;
+        }
+
+        // See if this player has approached a Warpstone
+        Warpstone warpstone = getApproachedWarpstone(event.getPlayer());
+        if (warpstone != null) {
+            // Make sure clicked block is above the location (not the ground)
+            if (event.getClickedBlock().getLocation().getBlockY() < warpstone.getLocation().getBlockY()) {
+                return;
+            }
+
+            // Fire interact event
+            WarpstoneInteractEvent interactEvent = new WarpstoneInteractEvent(event.getPlayer(), warpstone, event);
+            Bukkit.getPluginManager().callEvent(interactEvent);
         }
     }
 
