@@ -3,22 +3,24 @@ package com.kylenanakdewa.warpstones.warpstone;
 import java.util.Arrays;
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
+import org.bukkit.block.data.BlockData;
 
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.WorldEditException;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
-import com.sk89q.worldedit.extension.input.InputParseException;
-import com.sk89q.worldedit.extension.input.ParserContext;
 import com.sk89q.worldedit.extent.clipboard.Clipboard;
 import com.sk89q.worldedit.function.operation.Operation;
 import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.function.pattern.Pattern;
+import com.sk89q.worldedit.function.pattern.RandomPattern;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.math.transform.AffineTransform;
 import com.sk89q.worldedit.session.ClipboardHolder;
+import com.sk89q.worldedit.world.block.BlockTypes;
 
 /**
  * Handles Warpstone structure generation, using WorldEdit.
@@ -101,7 +103,7 @@ class WarpstoneWEGeneration {
         }
 
         catch (WorldEditException e) {
-            WorldEdit.logger.warn(
+            Bukkit.getLogger().warning(
                     "Unable to generate Warpstone structure, unknown error when pasting: " + e.getLocalizedMessage());
         }
     }
@@ -194,8 +196,8 @@ class WarpstoneWEGeneration {
         }
 
         catch (WorldEditException e) {
-            WorldEdit.logger
-                    .warn("Unable to generate Warpstone ground cover, unknown error when generating ground cover: "
+            Bukkit.getLogger()
+                    .warning("Unable to generate Warpstone ground cover, unknown error when generating ground cover: "
                             + e.getLocalizedMessage());
         }
     }
@@ -208,17 +210,15 @@ class WarpstoneWEGeneration {
      * @return a WorldEdit pattern for the ground decoration
      */
     private static Pattern getGroundPattern(Location location) {
-        try {
-            // Ground pattern is the center block, plus coarse dirt and gravel
-            String centerBlockName = location.subtract(0, 1, 0).getBlock().getType().getKey().getKey();
-            String patternString = "coarse_dirt,gravel," + centerBlockName;
+        BlockData block = location.subtract(0, 1, 0).getBlock().getBlockData();
 
-            return WorldEdit.getInstance().getPatternFactory().parseFromInput(patternString, new ParserContext());
-        } catch (InputParseException e) {
-            WorldEdit.logger
-                    .warn("Unable to generate Warpstone ground cover, invalid pattern: " + e.getLocalizedMessage());
-            return null;
-        }
+        // Ground pattern is the center block, plus coarse dirt and gravel
+        RandomPattern pattern = new RandomPattern();
+        pattern.add(BlockTypes.COARSE_DIRT.getDefaultState(), 1);
+        pattern.add(BlockTypes.GRAVEL.getDefaultState(), 1);
+        pattern.add(BukkitAdapter.adapt(block), 1);
+
+        return pattern;
     }
 
 }
