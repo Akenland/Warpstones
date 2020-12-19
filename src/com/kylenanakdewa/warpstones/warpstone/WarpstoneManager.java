@@ -67,7 +67,7 @@ public class WarpstoneManager {
     }
 
     public void onDisable() {
-        saveAllWarpstones();
+        //saveAllWarpstones(); - this is called on enable, before anything can be loaded
     }
 
     /**
