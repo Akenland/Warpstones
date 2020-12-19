@@ -49,6 +49,9 @@ public class WarpstoneManager {
     /** The Warpstones available on this server. */
     private final Map<String, Warpstone> warpstones;
 
+    /** The data file. This file holds all saved data for every Warpstone on the server. */
+    private ConfigAccessor dataFile;
+
     public WarpstoneManager(WarpstonesPlugin plugin) {
         managerInstance = this;
 
@@ -58,12 +61,13 @@ public class WarpstoneManager {
     }
 
     public void onEnable() {
+        dataFile = new ConfigAccessor("wsdata.yml", plugin);
         loadAllWarpstones();
         registerListeners();
     }
 
     public void onDisable() {
-
+        saveAllWarpstones();
     }
 
     /**
@@ -85,7 +89,7 @@ public class WarpstoneManager {
      * Warpstone on the server.
      */
     private FileConfiguration getDataFile() {
-        return new ConfigAccessor("wsdata.yml", plugin).getConfig();
+        return dataFile.getConfig();
     }
 
     /**
@@ -247,6 +251,8 @@ public class WarpstoneManager {
         for (Warpstone warpstone : warpstones.values()) {
             saveWarpstoneToDataFile(warpstone);
         }
+
+        dataFile.saveConfig();
 
         plugin.getLogger().info("Saved " + warpstones.size() + " Warpstones.");
     }
