@@ -197,7 +197,7 @@ public class WarpstoneManager {
         data.set("saving-blocked", warpstone.isSaveBlocked());
 
         // Forced destination
-        Location forcedDestination = warpstone.getLocation();
+        Location forcedDestination = warpstone.getForcedDestination();
         if (forcedDestination != null) {
             // World
             data.set("forced-destination.world", forcedDestination.getWorld().getName());
