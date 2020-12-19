@@ -63,7 +63,7 @@ public final class WarpstonesCommand implements TabExecutor {
         }
 
         // Create a warpstone
-        if (args.length == 2 && args[0].equalsIgnoreCase("create")) {
+        if (args.length >= 2 && args[0].equalsIgnoreCase("create")) {
             if (!sender.hasPermission("warpstones.manage") || !(sender instanceof Player)) {
                 return Error.NO_PERMISSION.displayChat(sender);
             }
@@ -82,7 +82,22 @@ public final class WarpstonesCommand implements TabExecutor {
             sender.sendMessage(CommonColors.MESSAGE + "Warpstone " + wsIdentifier + " created.");
 
             // Prompt the player to generate the warpstone
-            onCommand(sender, command, label, new String[] { "generate", wsIdentifier });
+            if(args.length ==2){
+                onCommand(sender, command, label, new String[] { "generate", wsIdentifier });
+            } else if (args.length >= 3) {
+                onCommand(sender, command, label, new String[] { "generate", wsIdentifier, args[2] });
+            }
+
+            // Allow display name to be set
+            if(args.length >=4) {
+                // Merge all remaining args into a single string
+                List<String> lastArgs = new ArrayList<String>(Arrays.asList(args));
+                // Change "create" to "name", remove size
+                lastArgs.set(0, "name");
+                lastArgs.remove(2);
+
+                onCommand(sender, command, label, lastArgs.toArray(new String[lastArgs.size()]));
+            }
 
             return true;
         }
