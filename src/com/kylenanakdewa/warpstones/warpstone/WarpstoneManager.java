@@ -14,6 +14,7 @@ import com.kylenanakdewa.warpstones.warpstone.listeners.WarpstoneDelayListener;
 import com.kylenanakdewa.warpstones.warpstone.listeners.WarpstonePromptActionListener;
 import com.kylenanakdewa.warpstones.warpstone.listeners.WarpstoneProtectionListener;
 import com.kylenanakdewa.warpstones.warpstone.listeners.WarpstoneSaveListener;
+import com.kylenanakdewa.warpstones.warpstone.listeners.WarpstonesWorldSaveListener;
 
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -80,6 +81,7 @@ public class WarpstoneManager {
         plugin.getServer().getPluginManager().registerEvents(new WarpstonePromptActionListener(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new WarpstoneProtectionListener(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new WarpstoneSaveListener(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new WarpstonesWorldSaveListener(), plugin);
 
         plugin.getServer().getPluginManager().registerEvents(new WarpGuiListener(), plugin);
     }
