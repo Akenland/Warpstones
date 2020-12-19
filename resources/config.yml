@@ -6,7 +6,7 @@ general:
   color: BLUE
 
   # The name for a warpstone. Change this if you prefer to use a different term than "warpstone", and it will change everywhere in the plugin.
-  warpstone-name: Warpstone
+  warpstones-name: Warpstone
 
 
 teleportation:
