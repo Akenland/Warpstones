@@ -126,7 +126,7 @@ class WarpstoneWEGeneration {
             }
 
             // Nether biomes use Hell Warpstones
-            else if (biome.equals(Biome.NETHER)) {
+            else if (biome.equals(Biome.NETHER_WASTES)) {
                 design = WarpstoneDesign.HELL;
             }
 
