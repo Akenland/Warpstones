@@ -3,8 +3,8 @@ package com.kylenanakdewa.warpstones.warpstone.gui;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import com.kylenanakdewa.core.common.CommonColors;
 import com.kylenanakdewa.warpstones.WarpstonesPlayerData;
@@ -60,8 +60,8 @@ public class WarpGui {
         showWarpstoneInfo = true;
 
         allowWarpHome = true;
-        allowWarpFarthingHub = true;
-        allowWarpSpawn = true;
+        allowWarpFarthingHub = false; // Disabled for Banmas
+        allowWarpSpawn = false; // Disabled for Banmas
         allowWarpEvents = true;
 
         allowWarpRecent = true;
@@ -333,16 +333,20 @@ public class WarpGui {
     private ItemStack getEventsItem() {
         // TODO load all this from an external file
 
-        Material material = Material.DIAMOND;
+        Material material = Material.SPRUCE_SAPLING; // Material.DIAMOND;
 
-        String name = ChatColor.BLUE + "Warp to Events Hub";
+        String name = ChatColor.BLUE + "Warp to Banmas Festival";// "Warp to Events Hub";
 
         List<String> lore = new ArrayList<String>();
-        lore.add(CommonColors.MESSAGE + ChatColor.ITALIC.toString() + "Fast travel to the Events Hub.");
+        // lore.add(CommonColors.MESSAGE + ChatColor.ITALIC.toString() + "Fast travel to
+        // the Events Hub.");
+        // BANMAS TEMPORARY
+        lore.add(CommonColors.MESSAGE + ChatColor.ITALIC.toString() + "Fast travel to the Snow Globe.");
+        lore.add(CommonColors.MESSAGE + ChatColor.ITALIC.toString() + "Spawn & Festival Events.");
         lore.add("");
 
         // Get event location
-        Location eventLoc = null;
+        Location eventLoc = WarpstoneManager.get().getSpawnWarpstone().getLocation();
         if (eventLoc != null) {
             // Co-ords
             String locationString = eventLoc.getBlockX() + " " + eventLoc.getBlockY() + " " + eventLoc.getBlockZ();
@@ -374,7 +378,8 @@ public class WarpGui {
         List<String> lore = new ArrayList<String>();
 
         if (warpstone != null) {
-            lore.add(CommonColors.MESSAGE + ChatColor.ITALIC.toString() + "Return to $$FaeirLocation.");
+            lore.add(ChatColor.BLUE + ChatColor.MAGIC.toString() + warpstone.getIdentifier());
+            lore.add(CommonColors.MESSAGE + ChatColor.ITALIC.toString() + "Return to your previous location.");
 
             // Time
             String timeString;
@@ -413,15 +418,27 @@ public class WarpGui {
         ItemStack[] items = new ItemStack[3];
 
         WarpstonesPlayerData playerData = new WarpstonesPlayerData(player);
-        LinkedHashMap<Warpstone, Long> recentWarpstones = playerData.getRecentThreeWarpstones();
-        Warpstone[] wsArray = recentWarpstones.keySet().toArray(new Warpstone[0]);
-
-        for (int i = 0; i < items.length; i++) {
-            Warpstone warpstone = wsArray[i];
-            long time = recentWarpstones.get(warpstone);
-            items[i] = getRecentWarpstoneItem(warpstone, time);
+        /*
+         * LinkedHashMap<Warpstone, Long> recentWarpstones =
+         * playerData.getRecentThreeWarpstones(); Warpstone[] wsArray =
+         * recentWarpstones.keySet().toArray(new Warpstone[0]);
+         *
+         * for (int i = 0; i < wsArray.length; i++) { Warpstone warpstone = wsArray[i];
+         * long time = recentWarpstones.get(warpstone); items[i] =
+         * getRecentWarpstoneItem(warpstone, time); }
+         *
+         * return items;
+         */
+        int warpstonesFound = 0;
+        for (Entry<Warpstone, Long> entry : playerData.getRecentWarpstones(3, warpstone).entrySet()) {
+            if (!entry.getKey().equals(warpstone)) {
+                items[warpstonesFound] = getRecentWarpstoneItem(entry.getKey(), entry.getValue());
+                warpstonesFound++;
+            }
+            if (warpstonesFound == 3) {
+                break;
+            }
         }
-
         return items;
     }
 

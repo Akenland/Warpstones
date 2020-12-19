@@ -3,6 +3,7 @@ package com.kylenanakdewa.warpstones.warpstone.gui;
 import com.kylenanakdewa.core.common.CommonColors;
 import com.kylenanakdewa.warpstones.WarpstonesPlayerData;
 import com.kylenanakdewa.warpstones.warpstone.Warpstone;
+import com.kylenanakdewa.warpstones.warpstone.WarpstoneManager;
 import com.kylenanakdewa.warpstones.warpstone.events.PlayerWarpEvent.WarpCause;
 
 import org.bukkit.ChatColor;
@@ -10,8 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.InventoryView;
 
 /**
@@ -28,16 +27,6 @@ public class WarpGuiListener implements Listener {
         String titlePrefix = ChatColor.BLUE + ChatColor.GRAY.toString() + ChatColor.BLUE;
 
         return transaction.getTitle().startsWith(titlePrefix);
-    }
-
-    @EventHandler
-    public void onOpen(InventoryOpenEvent event) {
-
-    }
-
-    @EventHandler
-    public void onClose(InventoryCloseEvent event) {
-
     }
 
     @EventHandler
@@ -79,21 +68,21 @@ public class WarpGuiListener implements Listener {
             // Events Hub item
             case 25:
                 // TODO
-                event.getWhoClicked().sendMessage(CommonColors.ERROR + "No event is currently active.");
+                //event.getWhoClicked().sendMessage(CommonColors.ERROR + "No event is currently active.");
+                // Banmas temporary
+                playerData.teleportSpawn(false);
                 break;
 
             // Recent items
             case 39:
-                warpstone = playerData.getRecentThreeWarpstones().keySet().toArray(new Warpstone[0])[0];
-                playerData.warp(warpstone, WarpCause.WARPSTONE, false);
-                break;
             case 40:
-                warpstone = playerData.getRecentThreeWarpstones().keySet().toArray(new Warpstone[0])[1];
-                playerData.warp(warpstone, WarpCause.WARPSTONE, false);
-                break;
             case 41:
-                warpstone = playerData.getRecentThreeWarpstones().keySet().toArray(new Warpstone[0])[2];
-                playerData.warp(warpstone, WarpCause.WARPSTONE, false);
+                String target = event.getCurrentItem().getItemMeta().getLore().get(0);
+                target = ChatColor.stripColor(target);
+                warpstone = WarpstoneManager.get().getWarpstone(target);
+                if(warpstone!=null){
+                    playerData.warp(warpstone, WarpCause.WARPSTONE, false);
+                }
                 break;
 
             default:

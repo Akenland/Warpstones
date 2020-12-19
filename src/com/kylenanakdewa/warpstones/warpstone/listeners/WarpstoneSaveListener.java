@@ -32,6 +32,9 @@ public class WarpstoneSaveListener implements Listener {
             player.sendTitle("", wsName, -1, -1, -1);
         }
 
+        // Show particle effects
+        warpstone.displayParticles();
+
         // If Spawn Warpstone, or saving blocked, don't need to save
         if (event.isSpawnWarpstone() || warpstone.isSaveBlocked()) {
             return;

@@ -52,16 +52,16 @@ public class WarpstoneApproachListener implements Listener {
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
-        // If they moved more than 2m, check if they're near a Warpstone
+        // If they moved more than 1m, check if they're near a Warpstone
         double distanceSquaredMoved = event.getFrom().distanceSquared(event.getTo());
-        if (distanceSquaredMoved > 4) {
+        if (distanceSquaredMoved > 0.02) {
 
             // Look for Warpstones within 5m
             Warpstone warpstone = WarpstoneManager.get().getNearestWarpstone(event.getTo(), 5, false);
             if (warpstone != null) {
 
                 // Only fire event if player wasn't already at this Warpstone
-                if (!getApproachedWarpstone(event.getPlayer()).equals(warpstone)) {
+                if (getApproachedWarpstone(event.getPlayer()) == null) {
                     // Record the Warpstone, so we don't continously fire the event
                     setApproachedWarpstone(event.getPlayer(), warpstone);
 

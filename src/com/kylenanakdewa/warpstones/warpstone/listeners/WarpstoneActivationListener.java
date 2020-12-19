@@ -74,7 +74,7 @@ public class WarpstoneActivationListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void saveWarpstone(WarpstoneActivateEvent event) {
         // Check if event was cancelled earlier
-        if (event.isCancelled()) {
+        if (event.isCancelled() || event.isSpawnWarpstone()) {
             return;
         }
 
