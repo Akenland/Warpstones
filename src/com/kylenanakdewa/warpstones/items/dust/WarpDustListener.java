@@ -21,7 +21,7 @@ public class WarpDustListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onWarpstoneActivate(WarpstoneActivateEvent event) {
-        if (!event.isCancelled() && !event.isMostRecentWarpstone() && !event.isSpawnWarpstone()) {
+        if (!event.isCancelled() && !event.isRecentWarpstone() && !event.isSpawnWarpstone()) {
             ItemStack dust = new WarpDust().getRandomWarpDust(40, 8);
 
             // Make sure air isn't dropped
