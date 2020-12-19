@@ -100,7 +100,7 @@ public class Warpstone {
 	 * @return the location of this Warpstone
 	 */
 	public Location getLocation() {
-		return location;
+		return location.clone();
 	}
 
 	/**
@@ -353,6 +353,8 @@ public class Warpstone {
 		Location exitLocation = null;
 
 		while (exitLocation == null && attempts < 3) {
+			attempts++;
+
 			World world = getLocation().getWorld();
 			int xbase = getLocation().getBlockX();
 			int yBase = getLocation().getBlockY();
