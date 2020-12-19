@@ -2,6 +2,7 @@ package com.kylenanakdewa.warpstones.warpstone;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
@@ -430,6 +431,14 @@ public class Warpstone {
 		} else {
 			Utils.notifyAdminsError("Unable to generate Warpstone structure, WorldEdit not installed.");
 		}
+	}
+
+	/**
+	 * Displays visual particle effect at this Warpstone.
+	 */
+	public void displayParticles() {
+		location.getWorld().spawnParticle(Particle.PORTAL, location.getX(), location.getY() + 4, location.getZ(), 400,
+				0.5, 1, 0.5, 2);
 	}
 
 }
