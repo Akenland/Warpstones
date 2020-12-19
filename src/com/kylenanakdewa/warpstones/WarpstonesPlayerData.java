@@ -17,6 +17,8 @@ import com.kylenanakdewa.warpstones.warpstone.WarpstoneManager;
 import com.kylenanakdewa.warpstones.warpstone.events.PlayerWarpEvent;
 import com.kylenanakdewa.warpstones.warpstone.events.PlayerWarpEvent.WarpCause;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
@@ -87,6 +89,8 @@ public class WarpstonesPlayerData extends PlayerSaveDataSection {
 
 			recentData.set(wsIdentifier, timestamp);
 		}
+
+		save();
 	}
 
 	/**
@@ -101,10 +105,15 @@ public class WarpstonesPlayerData extends PlayerSaveDataSection {
 		LinkedHashMap<Warpstone, Long> map = getRecentWarpstones();
 		map.put(warpstone, timestamp);
 
-		// If map is over the limit, remove entries from the top
+		// If map is over the limit, remove oldest entries
 		while (map.size() > limit) {
-			Warpstone entry = map.keySet().iterator().next();
-			map.remove(entry);
+			Entry<Warpstone, Long> oldestEntry = null;
+			for (Entry<Warpstone, Long> entry : map.entrySet()) {
+				if (oldestEntry == null || entry.getValue() < oldestEntry.getValue()) {
+					oldestEntry = entry;
+				}
+			}
+			map.remove(oldestEntry.getKey());
 		}
 
 		setRecentWarpstones(map);
@@ -130,16 +139,24 @@ public class WarpstonesPlayerData extends PlayerSaveDataSection {
 	 * @return the most recent Warpstone
 	 */
 	public Warpstone getMostRecentWarpstone() {
-		Warpstone[] recentWarpstones = getRecentWarpstones().keySet().toArray(new Warpstone[0]);
+		/*
+		 * Warpstone[] recentWarpstones = getRecentWarpstones().keySet().toArray(new
+		 * Warpstone[0]);
+		 *
+		 * // Make sure player has at least one recent Warpstone if
+		 * (recentWarpstones.length == 0) { return null; }
+		 *
+		 * // Get the last element of the array Warpstone mostRecentWs =
+		 * recentWarpstones[recentWarpstones.length - 1]; return mostRecentWs;
+		 */
 
-		// Make sure player has at least one recent Warpstone
-		if (recentWarpstones.length == 0) {
-			return null;
+		Entry<Warpstone, Long> newestEntry = null;
+		for (Entry<Warpstone, Long> entry : getRecentWarpstones().entrySet()) {
+			if (newestEntry == null || entry.getValue() > newestEntry.getValue()) {
+				newestEntry = entry;
+			}
 		}
-
-		// Get the last element of the array
-		Warpstone mostRecentWs = recentWarpstones[recentWarpstones.length - 1];
-		return mostRecentWs;
+		return newestEntry.getKey();
 	}
 
 	/**
@@ -148,6 +165,7 @@ public class WarpstonesPlayerData extends PlayerSaveDataSection {
 	 *
 	 * @return the three most recent Warpstones
 	 */
+	@Deprecated
 	public LinkedHashMap<Warpstone, Long> getRecentThreeWarpstones() {
 		LinkedHashMap<Warpstone, Long> recentWarpstones = getRecentWarpstones();
 
@@ -174,6 +192,46 @@ public class WarpstonesPlayerData extends PlayerSaveDataSection {
 		}
 
 		return recentThree;
+	}
+
+	/**
+	 * Gets a specific number of Warpstones that this player has visited recently,
+	 * along with the time that the Warpstone was visited.
+	 * <p>
+	 * The time will be milliseconds since midnight, January 1, 1970 UTC.
+	 *
+	 * @param count      the maximum number of Warpstones to return
+	 * @param exclusions any Warpstones that should be excluded from the returned
+	 *                   map
+	 * @return a map of recent Warpstones, and the times they were visited
+	 */
+	public LinkedHashMap<Warpstone, Long> getRecentWarpstones(int count, Collection<Warpstone> exclusions) {
+		LinkedHashMap<Warpstone, Long> map = new LinkedHashMap<Warpstone, Long>();
+		int warpstonesFound = 0;
+		for (Entry<Warpstone, Long> entry : getRecentWarpstones().entrySet()) {
+			if (exclusions == null || !exclusions.contains(entry.getKey())) {
+				map.put(entry.getKey(), entry.getValue());
+				warpstonesFound++;
+			}
+			if (warpstonesFound == count) {
+				break;
+			}
+		}
+		return map;
+	}
+
+	/**
+	 * Gets a specific number of Warpstones that this player has visited recently,
+	 * along with the time that the Warpstone was visited.
+	 * <p>
+	 * The time will be milliseconds since midnight, January 1, 1970 UTC.
+	 *
+	 * @param count      the maximum number of Warpstones to return
+	 * @param exclusions a Warpstones that should be excluded from the returned map
+	 * @return a map of recent Warpstones, and the times they were visited
+	 */
+	public LinkedHashMap<Warpstone, Long> getRecentWarpstones(int count, Warpstone exclusion) {
+		return getRecentWarpstones(count, Arrays.asList(exclusion));
 	}
 
 	/**
