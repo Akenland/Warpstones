@@ -349,11 +349,11 @@ public class Warpstone {
 			return null;
 		}
 
-		// Max 3 attempts to find valid exit location
+		// Max 10 attempts to find valid exit location
 		int attempts = 0;
 		Location exitLocation = null;
 
-		while (exitLocation == null && attempts < 3) {
+		while (exitLocation == null && attempts < 10) {
 			attempts++;
 
 			World world = getLocation().getWorld();
