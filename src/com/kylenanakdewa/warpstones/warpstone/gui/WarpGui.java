@@ -384,7 +384,9 @@ public class WarpGui {
             // Time
             String timeString;
             Duration duration = Duration.between(Instant.ofEpochMilli(time), Instant.now());
-            if (duration.toMinutes() < 60) {
+            if (duration.toMinutes() <= 1) {
+                timeString = "Less than a minute ago.";
+            } else if (duration.toMinutes() < 120) {
                 timeString = duration.toMinutes() + " minutes ago.";
             } else if (duration.toHours() < 48) {
                 timeString = duration.toHours() + " hours ago.";
