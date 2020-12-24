@@ -2,6 +2,7 @@ package com.kylenanakdewa.warpstones.warpstone;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -382,7 +383,8 @@ public class Warpstone {
 			Block feetBlock = world.getBlockAt(testLocation);
 			Block headBlock = feetBlock.getRelative(0, 1, 0);
 			Block floorBlock = feetBlock.getRelative(0, -1, 0);
-			if (headBlock.isEmpty() && feetBlock.isPassable() && floorBlock.getType().isSolid()) {
+			if (headBlock.isEmpty() && (feetBlock.isPassable() || feetBlock.getType().equals(Material.SNOW))
+					&& floorBlock.getType().isSolid()) {
 				exitLocation = testLocation;
 			}
 		}
