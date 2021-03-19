@@ -60,8 +60,8 @@ public class WarpGui {
         showWarpstoneInfo = true;
 
         allowWarpHome = true;
-        allowWarpFarthingHub = false; // Disabled for Banmas
-        allowWarpSpawn = false; // Disabled for Banmas
+        allowWarpFarthingHub = true;
+        allowWarpSpawn = true;
         allowWarpEvents = true;
 
         allowWarpRecent = true;
@@ -333,20 +333,21 @@ public class WarpGui {
     private ItemStack getEventsItem() {
         // TODO load all this from an external file
 
-        Material material = Material.SPRUCE_SAPLING; // Material.DIAMOND;
+        Material material = Material.DIAMOND;
 
-        String name = ChatColor.BLUE + "Warp to Banmas Festival";// "Warp to Events Hub";
+        String name = ChatColor.BLUE + "Warp to Events Hub";
 
         List<String> lore = new ArrayList<String>();
-        // lore.add(CommonColors.MESSAGE + ChatColor.ITALIC.toString() + "Fast travel to
-        // the Events Hub.");
+        lore.add(CommonColors.MESSAGE + ChatColor.ITALIC.toString() + "Fast travel to the Events Hub.");
+        lore.add(CommonColors.MESSAGE + ChatColor.ITALIC.toString() + "Access to other worlds");
+        lore.add(CommonColors.MESSAGE + ChatColor.ITALIC.toString() + "and special events.");
         // BANMAS TEMPORARY
-        lore.add(CommonColors.MESSAGE + ChatColor.ITALIC.toString() + "Fast travel to the Snow Globe.");
-        lore.add(CommonColors.MESSAGE + ChatColor.ITALIC.toString() + "Spawn & Festival Events.");
+        //lore.add(CommonColors.MESSAGE + ChatColor.ITALIC.toString() + "Fast travel to the Snow Globe.");
+        //lore.add(CommonColors.MESSAGE + ChatColor.ITALIC.toString() + "Spawn & Festival Events.");
         lore.add("");
 
         // Get event location
-        Location eventLoc = WarpstoneManager.get().getSpawnWarpstone().getLocation();
+        Location eventLoc = WarpstoneManager.get().getWarpstone("events_hub").getLocation();
         if (eventLoc != null) {
             // Co-ords
             String locationString = eventLoc.getBlockX() + " " + eventLoc.getBlockY() + " " + eventLoc.getBlockZ();
