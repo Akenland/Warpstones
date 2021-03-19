@@ -68,9 +68,12 @@ public class WarpGuiListener implements Listener {
             // Events Hub item
             case 25:
                 // TODO
-                //event.getWhoClicked().sendMessage(CommonColors.ERROR + "No event is currently active.");
-                // Banmas temporary
-                playerData.teleportSpawn(false);
+                warpstone = WarpstoneManager.get().getWarpstone("events_hub");
+                if(warpstone==null){
+                    event.getWhoClicked().sendMessage(CommonColors.ERROR + "No event is currently active.");
+                } else {
+                    playerData.warp(warpstone, WarpCause.WARPSTONE, false);
+                }
                 break;
 
             // Recent items
